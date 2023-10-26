@@ -30,12 +30,6 @@ class AccountServices {
         await account.save();
         return account;
     }
-    async updateBalance(id, balance) {
-        const account = await Account.findByPk(id);
-        account.balance = balance;
-        await account.save();
-        return account;
-    }
     async updateBalanceByAccount(agency, account, balance) {
         const account = await Account.findOne({
             where: {
@@ -44,26 +38,6 @@ class AccountServices {
             }
         });
         account.balance = balance;
-        await account.save();
-        return account;
-    }
-    async updateBalanceByUserId(userId, balance) {
-        const account = await Account.findOne({
-            where: {
-                userId: userId
-            }
-        });
-        account.balance = balance;
-        await account.save();
-        return account;
-    }
-    async resetBalanceByUserId(userId) {
-        const account = await Account.findOne({
-            where: {
-                userId: userId
-            }
-        });
-        account.balance = 0;
         await account.save();
         return account;
     }
