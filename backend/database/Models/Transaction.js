@@ -1,47 +1,44 @@
 const sequelize = require('../database.js');
 const Sequelize = require('sequelize');
 const User = require('./User.js');
-const Account = sequelize.define('accounts', {
+const Account = require('./Account.js');
+const Transaction = sequelize.define('transactions', {
     id: {
         type: Sequelize.DataTypes.INTEGER,
         autoIncrement: true,
         allowNull: false,
         primaryKey: true,
     },
-    agency: {
-        type: Sequelize.DataTypes.INTEGER,
+    type: {
+        type: Sequelize.DataTypes.STRING,
         allowNull: false,
     },
-    accountNumber: {
-        type: Sequelize.DataTypes.INTEGER,
-        allowNull: false,
-    },
-    balance: {
+    value: {
         type: Sequelize.DataTypes.FLOAT,
         allowNull: false,
     },
-    userId: {
+    accountId: {
         type: Sequelize.DataTypes.INTEGER,
         allowNull: false,
     }
 });
 
-Account.belongsTo(User, {
-    foreignKey: 'userId',
+Transaction.belongsTo(Account, {
+    foreignKey: 'accountId',
     targetKey: 'id',
 });
 
-User.hasMany(Account, {
-    foreignKey: 'userId',
+Account.hasMany(Transaction, {
+    foreignKey: 'accountId',
     sourceKey: 'id',
 });
 
-Account.sync({alter: false, force: false})
+Transaction.sync({alter: true, force: false})
     .then(() => {
-        console.log("Tabela de Contas criada")
+        console.log("Tabela de Transações criada")
     })
     .catch((error) => {
-        console.log("Erro ao criar tabela de Contas: " + error)
+        console.log("Erro ao criar tabela de Transações: " + error)
     });
 
-module.exports = Account;
+module.exports = Transaction;
