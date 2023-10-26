@@ -12,7 +12,7 @@ const Account = sequelize.define('accounts', {
         type: Sequelize.DataTypes.INTEGER,
         allowNull: false,
     },
-    account: {
+    accountNumber: {
         type: Sequelize.DataTypes.INTEGER,
         allowNull: false,
     },
@@ -36,7 +36,7 @@ User.hasMany(Account, {
     sourceKey: 'id',
 });
 
-Account.sync({alter: false, force: false})
+Account.sync({alter: true, force: false})
     .then(() => {
         console.log("Tabela de Contas criada")
     })

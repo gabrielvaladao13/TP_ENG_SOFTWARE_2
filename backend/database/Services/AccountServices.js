@@ -1,10 +1,10 @@
 const Account = require('../Models/Account.js');
 
 class AccountServices {
-    async createAccount(agency, account, balance, userId) {
+    async createAccount(agency, accountNumber, balance, userId) {
         const account = await Account.create({
             "agency": agency,
-            "account": account,
+            "accountNumber": accountNumber,
             "balance": balance,
             "userId": userId
         });
@@ -21,31 +21,31 @@ class AccountServices {
         }
         return account;
     }
-    async updateAccount(id, agency, account, balance, userId) {
+    async updateAccount(id, agency, accountNumber, balance, userId) {
         const account = await Account.findByPk(id);
         account.agency = agency;
-        account.account = account;
+        account.accountNumber = accountNumber;
         account.balance = balance;
         account.userId = userId;
         await account.save();
         return account;
     }
-    async updateBalanceByAccount(agency, account, balance) {
+    async updateBalanceByAccount(agency, accountNumber, balance) {
         const account = await Account.findOne({
             where: {
                 agency: agency,
-                account: account
+                accountNumber: accountNumber
             }
         });
         account.balance = balance;
         await account.save();
         return account;
     }
-    async resetBalanceByAccount(agency, account) { 
+    async resetBalanceByAccount(agency, accountNumber) { 
         const account = await Account.findOne({
             where: {
                 agency: agency,
-                account: account
+                accountNumber: accountNumber
             }
         });
         account.balance = 0;
