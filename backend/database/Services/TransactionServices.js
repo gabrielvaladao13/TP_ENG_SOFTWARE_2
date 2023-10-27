@@ -31,6 +31,31 @@ class TransactionServices {
                 [Op.between]: [body.period_start, body.period_end]
             }
         }
+        if (body.period_start && !body.period_end) {
+            filtroDinamico.createdAt = {
+                [Op.gte]: body.period_start
+            }
+        }
+        if (!body.period_start && body.period_end) {
+            filtroDinamico.createdAt = {
+                [Op.lte]: body.period_end
+            }
+        }
+        if (body.value_min && body.value_max) {
+            filtroDinamico.value = {
+                [Op.between]: [body.value_min, body.value_max]
+            }
+        }
+        if (body.value_min && !body.value_max) {
+            filtroDinamico.value = {
+                [Op.gte]: body.value_min
+            }
+        }
+        if (!body.value_min && body.value_max) {
+            filtroDinamico.value = {
+                [Op.lte]: body.value_max
+            }
+        }
         const transactions = await Transaction.findAll({
             where: filtroDinamico
         });
