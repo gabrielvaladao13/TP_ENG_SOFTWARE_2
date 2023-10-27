@@ -73,6 +73,18 @@ class TransactionServices {
         });
         return transactions;
     }
+    async listTransactionByPeriod(period_start, period_end) {
+        // O atributo cratedAt deve estar dentro de um período de tempo fornecido, nao deve ser igual ao period mas sim estar dentro dele
+        const transactions = await Transaction.findAll({
+            where: {
+                createdAt: {
+                    [Op.between]: [period_start, period_end]
+                }
+            }
+        });
+        return transactions;
+    }
+
     async updateTransaction(id, type, category, value, accountId) {
         const transaction = await Transaction.findByPk(id);
         transaction.type = type;
