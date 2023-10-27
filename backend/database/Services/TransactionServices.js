@@ -1,7 +1,7 @@
 const Transaction = require('../Models/Transaction.js');
 
 class TransactionServices {
-    async createtransaction(type, category, value, accountId) {
+    async createTransaction(type, category, value, accountId) {
         const transaction = await Transaction.create({
             "type": type,
             "category": category,
@@ -10,18 +10,18 @@ class TransactionServices {
         });
         return transaction;
     }
-    async listtransactions() {
+    async listTransactions() {
         const transactions = await Transaction.findAll();
         return transactions;
     }
-    async listtransactionById(id) {
+    async listTransactionById(id) {
         const transaction = await Transaction.findByPk(id);
         if (transaction === null) {
             throw new Error('Transação não encontrada');
         }
         return transaction;
     }
-    async listtransactionByAccountId(accountId) {
+    async listTransactionByAccountId(accountId) {
         const transactions = await Transaction.findAll({
             where: {
                 accountId: accountId
@@ -29,7 +29,7 @@ class TransactionServices {
         });
         return transactions;
     }
-    async listtransactionByType(type) {
+    async listTransactionByType(type) {
         const transactions = await Transaction.findAll({
             where: {
                 type: type
@@ -37,7 +37,7 @@ class TransactionServices {
         });
         return transactions;
     }
-    async listtransactionByCategory(category) {
+    async listTransactionByCategory(category) {
         const transactions = await Transaction.findAll({
             where: {
                 category: category
@@ -45,7 +45,7 @@ class TransactionServices {
         });
         return transactions;
     }
-    async listtransactionByAccountIdAndType(accountId, type) {
+    async listTransactionByAccountIdAndType(accountId, type) {
         const transactions = await Transaction.findAll({
             where: {
                 accountId: accountId,
@@ -54,7 +54,7 @@ class TransactionServices {
         });
         return transactions;
     }
-    async listtransactionByAccountIdAndCategory(accountId, category) {
+    async listTransactionByAccountIdAndCategory(accountId, category) {
         const transactions = await Transaction.findAll({
             where: {
                 accountId: accountId,
@@ -63,7 +63,7 @@ class TransactionServices {
         });
         return transactions;
     }
-    async listtransactionByAccountIdAndTypeAndCategory(accountId, type, category) {
+    async listTransactionByAccountIdAndTypeAndCategory(accountId, type, category) {
         const transactions = await Transaction.findAll({
             where: {
                 accountId: accountId,
@@ -73,7 +73,7 @@ class TransactionServices {
         });
         return transactions;
     }
-    async updatetransaction(id, type, category, value, accountId) {
+    async updateTransaction(id, type, category, value, accountId) {
         const transaction = await Transaction.findByPk(id);
         transaction.type = type;
         transaction.category = category;
@@ -82,8 +82,8 @@ class TransactionServices {
         await transaction.save();
         return transaction;
     }
-    async deletetransaction(id) {
-        const transaction = await this.listtransactionById(id);
+    async deleteTransaction(id) {
+        const transaction = await this.listTransactionById(id);
         await transaction.destroy();
         return transaction;
     }
