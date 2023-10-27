@@ -13,6 +13,10 @@ const Transaction = sequelize.define('transactions', {
         type: Sequelize.DataTypes.STRING,
         allowNull: false,
     },
+    category: {
+        type: Sequelize.DataTypes.STRING,
+        allowNull: false,
+    },
     value: {
         type: Sequelize.DataTypes.FLOAT,
         allowNull: false,
