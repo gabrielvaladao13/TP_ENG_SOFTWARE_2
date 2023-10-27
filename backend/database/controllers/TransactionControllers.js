@@ -4,8 +4,8 @@ const router = require('express').Router();
 // Rota para criar uma nova transação
 router.post('/criarTransacao', async (req, res, next) => {
     try {
-        const { type, category, description, value, accountId } = req.body;
-        const transaction = await TransactionServices.createTransaction(type, category, description, value, accountId);
+        const { type, category, description, value, agency } = req.body;
+        const transaction = await TransactionServices.createTransaction(type, category, description, value, agency);
         res.status(201).json(transaction);
     } catch (error) {
         console.log(error);
@@ -16,7 +16,8 @@ router.post('/criarTransacao', async (req, res, next) => {
 // Rota para listar todas as transações
 router.get('/listarTransacoes', async (req, res, next) => {
     try {
-        const transacoes = await TransactionServices.listTransactions();
+        const body = req.body;
+        const transacoes = await TransactionServices.listTransactionsDynamic(body);
         res.status(200).json(transacoes);
     } catch (error) {
         console.log(error);
@@ -28,7 +29,7 @@ router.get('/listarTransacoes', async (req, res, next) => {
 router.get('/listarTransacoes/:id', async (req, res, next) => {
     const accountId = req.params.id;
     try {
-        const transacoes = await TransactionServices.listTransactionByAccountId(accountId);
+        const transacoes = await TransactionServices.listTransactionById(accountId);
         res.status(200).json(transacoes);
     } catch (error) {
         console.log(error);
@@ -36,58 +37,6 @@ router.get('/listarTransacoes/:id', async (req, res, next) => {
     }
 });
 
-//Rota para listar todas transações de uma categoria por conta
-router.get('/listarTransacoes/:id/:category', async (req, res, next) => {
-    const accountId = req.params.id;
-    const category = req.params.category;
-    try {
-        const transacoes = await TransactionServices.listTransactionByAccountIdAndCategory(accountId, category);
-        res.status(200).json(transacoes);
-    } catch (error) {
-        console.log(error);
-        next(error);
-    }
-});
-
-//Rota para listar todas transações de um tipo por conta
-router.get('/listarTransacoes/:id/:type', async (req, res, next) => {
-    const accountId = req.params.id;
-    const type = req.params.type;
-    try {
-        const transacoes = await TransactionServices.listTransactionByAccountIdAndType(accountId, type);
-        res.status(200).json(transacoes);
-    } catch (error) {
-        console.log(error);
-        next(error);
-    }
-});
-
-//Rota para listar todas as transções de um tipo por conta em determinado período
-router.get('/listarTransacoes/:id/:type/:startDate/:endDate', async (req, res, next) => {
-    const accountId = req.params.id;
-    const type = req.params.type;
-    const startDate = req.params.startDate;
-    const endDate = req.params.endDate;
-    try {
-        const transacoes = await TransactionServices.listTransactionByAccountIdAndTypeAndDate(accountId, type, startDate, endDate);
-        res.status(200).json(transacoes);
-    } catch (error) {
-        console.log(error);
-        next(error);
-    }
-}); //Tem que implementar no outro esse ainda
-
-// Rota para obter informações de uma transação por ID
-router.get('/transacao/:id', async (req, res, next) => {
-    const transactionId = req.params.id;
-    try {
-        const transacao = await TransactionServices.listTransactionById(transactionId);
-        res.status(200).json(transacao);
-    } catch (error) {
-        console.log(error);
-        next(error);
-    }
-});
 
 
 // Rota para atualizar informações de uma transação por ID

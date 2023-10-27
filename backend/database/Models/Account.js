@@ -9,16 +9,13 @@ const Account = sequelize.define('accounts', {
         primaryKey: true,
     },
     agency: {
-        type: Sequelize.DataTypes.INTEGER,
-        allowNull: false,
-    },
-    accountNumber: {
-        type: Sequelize.DataTypes.INTEGER,
+        type: Sequelize.DataTypes.STRING,
         allowNull: false,
     },
     balance: {
         type: Sequelize.DataTypes.FLOAT,
         allowNull: false,
+        defaultValue: 0.0,
     },
     userId: {
         type: Sequelize.DataTypes.INTEGER,

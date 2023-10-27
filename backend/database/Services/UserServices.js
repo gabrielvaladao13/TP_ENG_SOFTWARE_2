@@ -30,6 +30,7 @@ class UserServices {
         await user.save();
         return user;
     }
+    //fazer igual o transaction
     async deleteUser(id) {
         const user = await this.listUserById(id);
         await user.destroy();

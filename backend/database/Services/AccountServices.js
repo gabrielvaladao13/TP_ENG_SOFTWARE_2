@@ -1,10 +1,9 @@
 const Account = require('../Models/Account.js');
 
 class AccountServices {
-    async createAccount(agency, accountNumber, balance, userId) {
+    async createAccount(agency, balance, userId) {
         const account = await Account.create({
             "agency": agency,
-            "accountNumber": accountNumber,
             "balance": balance,
             "userId": userId
         });
@@ -21,33 +20,34 @@ class AccountServices {
         }
         return account;
     }
-    async updateAccount(id, agency, accountNumber, balance, userId) {
+    async listAccountByUserId(userId) {
+        const account = await Account.findAll({
+            where: {
+                userId: userId
+            }
+        });
+        if (account === null) {
+            throw new Error('Conta não encontrada');
+        }
+        return account;
+    }
+    async updateAccount(id, agency, balance, userId) {
         const account = await Account.findByPk(id);
         account.agency = agency;
-        account.accountNumber = accountNumber;
         account.balance = balance;
         account.userId = userId;
         await account.save();
         return account;
     }
-    async updateBalanceByAccount(agency, accountNumber, balance) {
-        const account = await Account.findOne({
-            where: {
-                agency: agency,
-                accountNumber: accountNumber
-            }
-        });
-        account.balance = balance;
+    //fazer igual o transaction
+    async updateBalanceByAccountById(id, value) {
+        const account = await Account.findByPk(id);
+        account.balance += value;
         await account.save();
         return account;
     }
-    async resetBalanceByAccount(agency, accountNumber) { 
-        const account = await Account.findOne({
-            where: {
-                agency: agency,
-                accountNumber: accountNumber
-            }
-        });
+    async resetBalanceByAccountById(id) {
+        const account = await Account.findByPk(id);
         account.balance = 0;
         await account.save();
         return account;

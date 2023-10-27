@@ -4,8 +4,8 @@ const router = require('express').Router();
 // Rota para criar uma nova conta
 router.post('/criarConta', async (req, res, next) => {
     try {
-        const { agency, accountNumber, balance, userId } = req.body;
-        const conta = await AccountServices.createAccount(agency, accountNumber, balance, userId);
+        const { agency, balance, userId } = req.body;
+        const conta = await AccountServices.createAccount(agency, balance, userId);
         res.status(201).json(conta);
     } catch (error) {
         console.log(error);
@@ -36,13 +36,25 @@ router.get('/conta/:id', async (req, res, next) => {
     }
 });
 
+// Rota para obter informações de uma conta por ID de usuário
+router.get('/conta/usuario/:id', async (req, res, next) => {
+    const userId = req.params.id;
+    try {
+        const conta = await AccountServices.listAccountByUserId(userId);
+        res.status(200).json(conta);
+    } catch (error) {
+        console.log(error);
+        next(error);
+    }
+});
+
 
 // Rota para atualizar informações de uma conta por ID
 router.put('/conta/:id', async (req, res, next) => {
     const accountId = req.params.id;
-    const { agency, accountNumber, balance, userId } = req.body;
+    const { agency, balance, userId } = req.body;
     try {
-        const conta = await AccountServices.updateAccount(accountId, agency, accountNumber, balance, userId);
+        const conta = await AccountServices.updateAccount(accountId, agency, balance, userId);
         res.status(200).json(conta);
     } catch (error) {
         console.log(error);

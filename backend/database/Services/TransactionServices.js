@@ -1,30 +1,59 @@
 const Transaction = require('../Models/Transaction.js');
+const Account = require('../Models/Account.js');
 
 class TransactionServices {
-    async createTransaction(type, category, description, value, accountId) {
+    async createTransaction(type, category, description, value, agency) {
+        if (type === "despesa") {
+            value*=-1;
+        }
+        const account = await Account.findOne({
+            where: {
+                agency: agency, 
+                userId:  1 //gambiarra ate arrumar o login
+            }
+        });
         const transaction = await Transaction.create({
             "type": type,
             "category": category,
             "description": description,
             "value": value,
-            "accountId": accountId
+            "accountId": account.id //gambirra ate arrumar o login
         });
+        return transaction;
+    }
+
+    async listTransactionById(id) {
+        const transaction = await Transaction.findByPk(id);
+        if (transaction === null) {
+            throw new Error('Transação não encontrada');
+        }
         return transaction;
     }
 
     async listTransactionsDynamic(body) {
         let filtroDinamico = {};
-        if (body.id) {
-            filtroDinamico.id = body.id;
-        }
         if (body.type) {
             filtroDinamico.type = body.type;
         }
         if (body.category) {
             filtroDinamico.category = body.category;
         }
-        if (body.accountId) { 
-            filtroDinamico.accountId = body.accountId;
+        if (body.agency) { 
+            const account = await Account.findOne({
+                where: {
+                    agency: body.agency, 
+                    userId:  1 //gambiarra ate arrumar o login
+                }
+            });
+            filtroDinamico.accountId = account.id;
+        }
+        else{
+            const account = await Account.findOne({
+                where: {
+                    userId:  1 //gambiarra ate arrumar o login
+                }
+            });
+            filtroDinamico.accountId = account.id;
         }
         if (body.period_start && body.period_end) {
             filtroDinamico.createdAt = {
@@ -62,14 +91,11 @@ class TransactionServices {
         return transactions;
     }
 
-    async updateTransaction(id, type, category, description, value, accountId) {
-        const transaction = await Transaction.findByPk(id);
-        transaction.type = type;
-        transaction.category = category;
-        transaction.description = description;
-        transaction.value = value;
-        transaction.accountId = accountId;
-        await transaction.save();
+    async updateTransaction(body) {
+        const transaction = await this.listTransactionById(id);
+        transaction.update(
+            body
+        );
         return transaction;
     }
     async deleteTransaction(id) {

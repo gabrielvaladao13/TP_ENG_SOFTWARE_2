@@ -44,7 +44,7 @@ Account.hasMany(Transaction, {
     sourceKey: 'id',
 });
 
-Transaction.sync({alter: true, force: false})
+Transaction.sync({alter: false, force: false})
     .then(() => {
         console.log("Tabela de Transações criada")
     })
