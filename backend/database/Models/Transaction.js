@@ -10,12 +10,15 @@ const Transaction = sequelize.define('transactions', {
         primaryKey: true,
     },
     type: {
-        type: Sequelize.DataTypes.STRING,
+        type: Sequelize.DataTypes.ENUM,
         allowNull: false,
+        values: ['receita', 'despesa'],
     },
     category: {
-        type: Sequelize.DataTypes.STRING,
+        type: Sequelize.DataTypes.ENUM,
         allowNull: false,
+        values: ['restaurante', 'supermercado', 'roupas', 'educação', 'lazer', 'moradia', 'salário', 'saúde', 
+                'transporte', 'investimento', 'viagem', 'imposto', 'outros'],
     },
     description:{
         type: Sequelize.DataTypes.STRING,
