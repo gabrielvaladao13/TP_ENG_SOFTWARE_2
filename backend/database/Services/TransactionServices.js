@@ -11,77 +11,28 @@ class TransactionServices {
         });
         return transaction;
     }
-    async listTransactions() {
-        const transactions = await Transaction.findAll();
-        return transactions;
-    }
-    async listTransactionById(id) {
-        const transaction = await Transaction.findByPk(id);
-        if (transaction === null) {
-            throw new Error('Transação não encontrada');
+
+    async listTransactionsDynamic(body) {
+        let filtroDinamico = {};
+        if (body.id) {
+            filtroDinamico.id = body.id;
         }
-        return transaction;
-    }
-    async listTransactionByAccountId(accountId) {
-        const transactions = await Transaction.findAll({
-            where: {
-                accountId: accountId
+        if (body.type) {
+            filtroDinamico.type = body.type;
+        }
+        if (body.category) {
+            filtroDinamico.category = body.category;
+        }
+        if (body.accountId) { 
+            filtroDinamico.accountId = body.accountId;
+        }
+        if (body.period_start && body.period_end) {
+            filtroDinamico.createdAt = {
+                [Op.between]: [body.period_start, body.period_end]
             }
-        });
-        return transactions;
-    }
-    async listTransactionByType(type) {
+        }
         const transactions = await Transaction.findAll({
-            where: {
-                type: type
-            }
-        });
-        return transactions;
-    }
-    async listTransactionByCategory(category) {
-        const transactions = await Transaction.findAll({
-            where: {
-                category: category
-            }
-        });
-        return transactions;
-    }
-    async listTransactionByAccountIdAndType(accountId, type) {
-        const transactions = await Transaction.findAll({
-            where: {
-                accountId: accountId,
-                type: type
-            }
-        });
-        return transactions;
-    }
-    async listTransactionByAccountIdAndCategory(accountId, category) {
-        const transactions = await Transaction.findAll({
-            where: {
-                accountId: accountId,
-                category: category
-            }
-        });
-        return transactions;
-    }
-    async listTransactionByAccountIdAndTypeAndCategory(accountId, type, category) {
-        const transactions = await Transaction.findAll({
-            where: {
-                accountId: accountId,
-                type: type,
-                category: category
-            }
-        });
-        return transactions;
-    }
-    async listTransactionByPeriod(period_start, period_end) {
-        // O atributo cratedAt deve estar dentro de um período de tempo fornecido, nao deve ser igual ao period mas sim estar dentro dele
-        const transactions = await Transaction.findAll({
-            where: {
-                createdAt: {
-                    [Op.between]: [period_start, period_end]
-                }
-            }
+            where: filtroDinamico
         });
         return transactions;
     }
