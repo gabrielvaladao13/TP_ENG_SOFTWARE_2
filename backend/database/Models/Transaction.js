@@ -17,6 +17,10 @@ const Transaction = sequelize.define('transactions', {
         type: Sequelize.DataTypes.STRING,
         allowNull: false,
     },
+    description:{
+        type: Sequelize.DataTypes.STRING,
+        allowNull: true,
+    },
     value: {
         type: Sequelize.DataTypes.FLOAT,
         allowNull: false,

@@ -1,10 +1,11 @@
 const Transaction = require('../Models/Transaction.js');
 
 class TransactionServices {
-    async createTransaction(type, category, value, accountId) {
+    async createTransaction(type, category, description, value, accountId) {
         const transaction = await Transaction.create({
             "type": type,
             "category": category,
+            "description": description,
             "value": value,
             "accountId": accountId
         });
@@ -85,10 +86,11 @@ class TransactionServices {
         return transactions;
     }
 
-    async updateTransaction(id, type, category, value, accountId) {
+    async updateTransaction(id, type, category, description, value, accountId) {
         const transaction = await Transaction.findByPk(id);
         transaction.type = type;
         transaction.category = category;
+        transaction.description = description;
         transaction.value = value;
         transaction.accountId = accountId;
         await transaction.save();

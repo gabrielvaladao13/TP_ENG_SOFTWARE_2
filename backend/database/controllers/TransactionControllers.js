@@ -4,8 +4,8 @@ const router = require('express').Router();
 // Rota para criar uma nova transação
 router.post('/criarTransacao', async (req, res, next) => {
     try {
-        const { type, category, value, accountId } = req.body;
-        const transaction = await TransactionServices.createTransaction(type, category, value, accountId);
+        const { type, category, description, value, accountId } = req.body;
+        const transaction = await TransactionServices.createTransaction(type, category, description, value, accountId);
         res.status(201).json(transaction);
     } catch (error) {
         console.log(error);
@@ -93,9 +93,9 @@ router.get('/transacao/:id', async (req, res, next) => {
 // Rota para atualizar informações de uma transação por ID
 router.put('/transacao/:id', async (req, res, next) => {
     const transactionId = req.params.id;
-    const { type, category, value, accountId } = req.body;
+    const { type, category, description, value, accountId } = req.body;
     try {
-        const transacao = await TransactionServices.updateTransaction(transactionId, type, category, value, accountId);
+        const transacao = await TransactionServices.updateTransaction(transactionId, type, category, description, value, accountId);
         res.status(200).json(transacao);
     } catch (error) {
         console.log(error);
