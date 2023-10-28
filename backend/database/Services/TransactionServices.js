@@ -12,6 +12,11 @@ class TransactionServices {
                 userId:  1 //gambiarra ate arrumar o login
             }
         });
+
+        // Atualize o saldo da conta com o valor da transação
+        account.balance += parseFloat(value);
+        await account.save(); // Salve a conta com o novo saldo
+
         const transaction = await Transaction.create({
             "type": type,
             "category": category,
