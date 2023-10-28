@@ -1,5 +1,40 @@
 const UserServices = require('../Services/UserServices.js');
 const router = require('express').Router();
+const {loginMiddleware,notLoggedIn,jwtMiddleware} = require('../../middlewares/login.js');
+  
+//Rota de login
+router.post('/login',
+    notLoggedIn,
+    loginMiddleware
+);
+
+//Rota para retornar o usuario logado
+router.get('/me',
+    jwtMiddleware,
+    async (req, res, next) => {
+        try {
+            const user = await UserServices.listUserById(req.user.id);
+            res.status(200).json(user);
+        } catch (error) {
+            console.log(error);
+            next(error);
+        }
+    }
+);
+
+//Rota para deslogar
+router.get('/logout',
+    jwtMiddleware,
+    async (req, res, next) => {
+        try {
+            res.clearCookie('jwt');
+            res.status(204).end();
+        } catch (error) {
+            console.log(error);
+            next(error);
+        }
+    }
+);
 
 // Rota para criar um novo usuário
 router.post('/criarUsuario', async (req, res, next) => {

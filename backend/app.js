@@ -4,6 +4,9 @@ const UserRouter = require('./database/controllers/UserControllers.js');
 const AccountRouter = require('./database/controllers/AccountControllers.js');
 const TransactionRouter = require('./database/controllers/TransactionControllers.js');
 const app = express();
+const cookieParser = require('cookie-parser');
+
+app.use(cookieParser());
 app.use(cors({
     origin: 'http://localhost:3030',
     credentials: true
@@ -13,6 +16,7 @@ app.use(express.urlencoded({
     extended: true,
 }));
 
+require('./config/auth.js');
 
 app.use('/api/usuarios', UserRouter);
 app.use('/api/contas', AccountRouter);
