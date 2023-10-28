@@ -1,5 +1,7 @@
 const Transaction = require('../Models/Transaction.js');
 const Account = require('../Models/Account.js');
+const AccountServices = require('../Services/AccountServices.js');
+
 
 class TransactionServices {
     async createTransaction(type, category, description, value, agency) {
@@ -13,10 +15,6 @@ class TransactionServices {
             }
         });
 
-        // Atualize o saldo da conta com o valor da transação
-        account.balance += parseFloat(value);
-        await account.save(); // Salve a conta com o novo saldo
-
         const transaction = await Transaction.create({
             "type": type,
             "category": category,
@@ -24,6 +22,10 @@ class TransactionServices {
             "value": value,
             "accountId": account.id //gambirra ate arrumar o login
         });
+
+        // Atualize o saldo da conta
+        await AccountServices.updateBalanceByAccountById(account.id, value);
+
         return transaction;
     }
 

@@ -40,7 +40,7 @@ class AccountServices {
     }
     async updateBalanceByAccountById(id, value) {
         const account = await Account.findByPk(id);
-        account.balance += value;
+        account.balance += parseFloat(value);
         await account.save();
         return account;
     }

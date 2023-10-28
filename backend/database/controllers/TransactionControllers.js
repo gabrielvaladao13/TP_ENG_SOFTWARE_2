@@ -37,8 +37,6 @@ router.get('/listarTransacoes/:id', async (req, res, next) => {
     }
 });
 
-
-
 // Rota para atualizar informações de uma transação por ID
 router.put('/transacao/:id', async (req, res, next) => {
     const transactionId = req.params.id;
