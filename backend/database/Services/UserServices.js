@@ -21,16 +21,13 @@ class UserServices {
         }
         return user;
     }
-    async updateUser(id, name, email, password, age) {
-        const user = await User.findByPk(id);
-        user.name = name;
-        user.email = email;
-        user.password = password;
-        user.age = age;
-        await user.save();
+    async updateUser(body) {
+        const user = await this.findByPk(id);
+        user.update(
+            body
+        );
         return user;
     }
-    //fazer igual o transaction
     async deleteUser(id) {
         const user = await this.listUserById(id);
         await user.destroy();

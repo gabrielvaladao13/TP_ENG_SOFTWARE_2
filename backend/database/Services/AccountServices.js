@@ -31,15 +31,13 @@ class AccountServices {
         }
         return account;
     }
-    async updateAccount(id, agency, balance, userId) {
-        const account = await Account.findByPk(id);
-        account.agency = agency;
-        account.balance = balance;
-        account.userId = userId;
-        await account.save();
+    async updateAccount(body) {
+        const account = await this.findByPk(id);
+        account.update(
+            body
+        );
         return account;
     }
-    //fazer igual o transaction
     async updateBalanceByAccountById(id, value) {
         const account = await Account.findByPk(id);
         account.balance += value;
