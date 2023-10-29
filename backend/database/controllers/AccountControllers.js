@@ -79,7 +79,7 @@ router.put('/conta/:id/reset', async (req, res, next) => {
 router.delete('/conta/:id', async (req, res, next) => {
     const accountId = req.params.id;
     try {
-        const conta = await AccountServices.deleteAccount(accountId);
+        const conta = await AccountServices.deleteAccount(accountId); 
         res.status(204).json(conta);
     } catch (error) {
         console.log(error);
