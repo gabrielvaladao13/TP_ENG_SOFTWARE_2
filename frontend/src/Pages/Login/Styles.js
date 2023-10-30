@@ -6,48 +6,46 @@ import {
 } from '@mui/material';
 
 const StyledContainer = styled(Container)(({ theme }) => ({
-  height: '100vh',
-  width: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-  backgroundColor: 'var(--app-beige)',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100vh',
 }));
 
 const CentralCard = styled(Paper)(({ theme }) => ({
-  width: '80%',
-  minWidth: 340,
-  height: '80%',
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  alignItems: 'center',
-  alignSelf: 'center',
-  gap: 10,
-  padding: 20,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '70%',
+    height: '70%',
+    padding: 30,
+    borderRadius: 20,
+    gap: 30,
+    backgroundColor: 'white',
 }));
 
 const LogoImage = styled('img')(({ theme }) => ({
-  width: 123,
-  height: 123,
-  marginBottom: 16,
+    width: 130,
+    height: 130,
+    marginBottom: 10,
 }));
 
 const Title = styled('span')(({ theme }) => ({
-  color: 'var(--app-rosa)',
+  color: 'black',
   fontSize: 30,
   fontWeight: 500,
   marginBottom: 10,
 }));
 
 const LoginForm = styled('form')(({ theme }) => ({
-  width: '70%',
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  alignItems: 'center',
-  gap: 30,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 14,
+    width: '100%',
 }));
 
 const InputData = styled('input')(({ theme }) => ({
@@ -70,21 +68,6 @@ const SubmitButtonStyle = {
   margin: 10,
 };
 
-const PassForgot = styled(Link)(({ theme }) => ({
-  color: 'var(--app-laranja)',
-  fontSize: 16,
-  fontWeight: 500,
-  textDecoration: 'none',
-}));
-
-const UserCreate = styled(Link)(({ theme }) => ({
-  color: 'var(--app-rosa)',
-  fontSize: 16,
-  fontWeight: 500,
-  textDecoration: 'none',
-}));
-
-
 export {
     StyledContainer,
     CentralCard,
@@ -93,6 +76,4 @@ export {
     LoginForm,
     InputData,
     SubmitButtonStyle,
-    PassForgot,
-    UserCreate,
 };

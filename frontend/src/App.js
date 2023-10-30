@@ -3,6 +3,7 @@ import './App.css';
 
 
 import Login from "./Pages/Login/Login";
+import NewTransaction from './Pages/NewTransaction/NewTransaction';
 
 function App() {
   return (
