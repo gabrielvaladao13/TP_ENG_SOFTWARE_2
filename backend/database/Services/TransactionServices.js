@@ -1,17 +1,18 @@
 const Transaction = require('../Models/Transaction.js');
 const Account = require('../Models/Account.js');
 const AccountServices = require('../Services/AccountServices.js');
+const { use } = require('passport');
 
 
 class TransactionServices {
-    async createTransaction(type, category, description, value, agency) {
+    async createTransaction(type, category, description, value, agency, date, userId) {
         if (type === "despesa") {
             value*=-1;
         }
         const account = await Account.findOne({
             where: {
                 agency: agency, 
-                userId:  1 //gambiarra ate arrumar o login
+                userId: userId,
             }
         });
 
@@ -20,7 +21,8 @@ class TransactionServices {
             "category": category,
             "description": description,
             "value": value,
-            "accountId": account.id //gambirra ate arrumar o login
+            "accountId": account.id,//gambirra ate arrumar o login
+            "date": date 
         });
 
         // Atualize o saldo da conta
@@ -37,7 +39,7 @@ class TransactionServices {
         return transaction;
     }
 
-    async listTransactionsDynamic(body) {
+    async listTransactionsDynamic(body, userId) {
         let filtroDinamico = {};
         if (body.type) {
             filtroDinamico.type = body.type;
@@ -49,15 +51,16 @@ class TransactionServices {
             const account = await Account.findOne({
                 where: {
                     agency: body.agency, 
-                    userId:  1 //gambiarra ate arrumar o login
+                    userId:  userId,
                 }
             });
             filtroDinamico.accountId = account.id;
         }
         else{
-            const account = await Account.findOne({
+            const account = await Account.findAll({ // quando não passa a conta especifica que quer deve pegar todas as transações
+                                                    // do usuario mas não ta dando certo
                 where: {
-                    userId:  1 //gambiarra ate arrumar o login
+                    userId:  userId,
                 }
             });
             filtroDinamico.accountId = account.id;

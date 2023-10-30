@@ -31,6 +31,10 @@ const Transaction = sequelize.define('transactions', {
     accountId: {
         type: Sequelize.DataTypes.INTEGER,
         allowNull: false,
+    },
+    date:{
+        type: Sequelize.DataTypes.DATEONLY,
+        allowNull: false,
     }
     // adicionar atributo data no futuro
 });
