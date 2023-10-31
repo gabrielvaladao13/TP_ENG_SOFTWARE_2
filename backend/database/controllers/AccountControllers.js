@@ -18,8 +18,7 @@ router.post('/criarConta',jwtMiddleware, async (req, res, next) => {
 // Rota para listar todas as contas
 router.get('/listarContas',jwtMiddleware, async (req, res, next) => {
     try {
-        const userId = req.user.id;
-        const contas = await AccountServices.listAccounts(userId);
+        const contas = await AccountServices.listAccounts();
         res.status(200).json(contas);
     } catch (error) {
         console.log(error);
