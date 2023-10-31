@@ -55,9 +55,9 @@ router.get('/conta/usuario/:id',jwtMiddleware, async (req, res, next) => {
 // Rota para atualizar informações de uma conta por ID
 router.put('/conta/:id',jwtMiddleware, async (req, res, next) => {
     const accountId = req.params.id;
-    const { agency, balance, userId } = req.body;
+    const body = req.body;
     try {
-        const conta = await AccountServices.updateAccount(accountId, agency, balance, userId);
+        const conta = await AccountServices.updateAccount(accountId, body);
         res.status(200).json(conta);
     } catch (error) {
         console.log(error);
@@ -66,17 +66,17 @@ router.put('/conta/:id',jwtMiddleware, async (req, res, next) => {
 });
 
 
-// Rota para redefinir o saldo de uma conta por ID
-router.put('/conta/:id/reset',jwtMiddleware, async (req, res, next) => {
-    const accountId = req.params.id;
-    try {
-        const conta = await AccountServices.resetBalanceByAccount(accountId);
-        res.status(200).json(conta);
-    } catch (error) {
-        console.log(error);
-        next(error);
-    }
-});
+// // Rota para redefinir o saldo de uma conta por ID
+// router.put('/conta/:id/reset',jwtMiddleware, async (req, res, next) => {
+//     const accountId = req.params.id;
+//     try {
+//         const conta = await AccountServices.resetBalanceByAccount(accountId);
+//         res.status(200).json(conta);
+//     } catch (error) {
+//         console.log(error);
+//         next(error);
+//     }
+// });
 
 // Rota para excluir uma conta por ID
 router.delete('/conta/:id',jwtMiddleware, async (req, res, next) => {

@@ -21,15 +21,15 @@ class UserServices {
         }
         return user;
     }
-    async updateUser(body) {
-        const user = await this.findByPk(id);
+    async updateUser(userId, body) {
+        const user = await User.findByPk(userId);
         user.update(
             body
         );
         return user;
     }
     async deleteUser(id) {
-        const user = await this.listUserById(id);
+        const user = await User.findByPk(id);
         await user.destroy();
         return user;
     }

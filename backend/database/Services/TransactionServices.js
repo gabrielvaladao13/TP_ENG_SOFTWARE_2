@@ -25,7 +25,7 @@ class TransactionServices {
             "date": date 
         });
 
-        // Atualize o saldo da conta
+        // Atualiza o saldo da conta
         await AccountServices.updateBalanceByAccountById(account.id, value);
 
         return transaction;
@@ -63,7 +63,7 @@ class TransactionServices {
                     userId:  userId,
                 }
             });
-            filtroDinamico.accountId = account.id;
+            // filtroDinamico.accountId = account.id;
         }
         if (body.period_start && body.period_end) {
             filtroDinamico.createdAt = {
@@ -101,8 +101,8 @@ class TransactionServices {
         return transactions;
     }
 
-    async updateTransaction(body) {
-        const transaction = await this.listTransactionById(id);
+    async updateTransaction(transactionId, body) {
+        const transaction = await Transaction.findByPk(transactionId);
         transaction.update(
             body
         );
@@ -110,6 +110,8 @@ class TransactionServices {
     }
     async deleteTransaction(id) {
         const transaction = await this.listTransactionById(id);
+        // Subtrai o valor da transação do saldo da conta
+        const account = await AccountServices.updateBalanceByAccountById(transaction.accountId, -transaction.value);        
         await transaction.destroy();
         return transaction;
     }

@@ -74,9 +74,9 @@ router.get('/usuario/:id', async (req, res, next) => {
 // Rota para atualizar informações de um usuário por ID
 router.put('/usuario/:id', async (req, res, next) => {
     const userId = req.params.id;
-    const { name, email, password, age } = req.body;
+    const body = req.body;
     try {
-        const usuario = await UserServices.updateUser(userId, name, email, password, age);
+        const usuario = await UserServices.updateUser(userId, body);
         res.status(200).json(usuario);
     } catch (error) {
         console.log(error);

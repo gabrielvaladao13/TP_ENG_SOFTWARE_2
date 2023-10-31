@@ -31,8 +31,8 @@ class AccountServices {
         }
         return account;
     }
-    async updateAccount(body) {
-        const account = await this.findByPk(id);
+    async updateAccount(accountId, body) {
+        const account = await Account.findByPk(accountId);
         account.update(
             body
         );
@@ -44,12 +44,12 @@ class AccountServices {
         await account.save();
         return account;
     }
-    async resetBalanceByAccountById(id) {
-        const account = await Account.findByPk(id);
-        account.balance = 0;
-        await account.save();
-        return account;
-    }
+    // async resetBalanceByAccountById(id) {
+    //     const account = await Account.findByPk(id);
+    //     account.balance = 0;
+    //     await account.save();
+    //     return account;
+    // }
     async deleteAccount(id) {
         const account = await this.listAccountById(id);
         await account.destroy();

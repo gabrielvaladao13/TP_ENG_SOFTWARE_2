@@ -43,9 +43,9 @@ router.get('/listarTransacoes/:id',jwtMiddleware, async (req, res, next) => {
 // Rota para atualizar informações de uma transação por ID
 router.put('/transacao/:id',jwtMiddleware, async (req, res, next) => {
     const transactionId = req.params.id;
-    const { type, category, description, value, accountId, date } = req.body;
+    const body= req.body;
     try {
-        const transacao = await TransactionServices.updateTransaction(transactionId, type, category, description, value, accountId, date);
+        const transacao = await TransactionServices.updateTransaction(transactionId, body);
         res.status(200).json(transacao);
     } catch (error) {
         console.log(error);
