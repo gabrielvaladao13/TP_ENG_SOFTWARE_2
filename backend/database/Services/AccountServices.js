@@ -9,8 +9,12 @@ class AccountServices {
         });
         return account;
     }
-    async listAccounts() {
-        const accounts = await Account.findAll();
+    async listAccounts(userId) {
+        const accounts = await Account.findAll({
+            where: {
+                userId: userId
+            }
+        });
         return accounts;
     }
     async listAccountById(id) {
