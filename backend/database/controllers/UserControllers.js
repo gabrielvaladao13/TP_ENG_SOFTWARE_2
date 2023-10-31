@@ -1,6 +1,6 @@
 const UserServices = require('../Services/UserServices.js');
 const router = require('express').Router();
-const {loginMiddleware,notLoggedIn,jwtMiddleware} = require('../../middlewares/login.js');
+const {loginMiddleware,notLoggedIn,jwtMiddleware, isAdmin} = require('../../middlewares/login.js');
   
 //Rota de login
 router.post('/login',
@@ -37,10 +37,10 @@ router.get('/logout',
 );
 
 // Rota para criar um novo usuário
-router.post('/criarUsuario', async (req, res, next) => {
+router.post('/criarUsuario', jwtMiddleware, isAdmin, async (req, res, next) => {
     try {
-        const { name, email, password, age } = req.body;
-        const usuario = await UserServices.createUser(name, email, password, age);
+        const { name, email, password, age, role} = req.body;
+        const usuario = await UserServices.createUser(name, email, password, age, role);
         res.status(201).json(usuario);
     } catch (error) {
         console.log(error);
@@ -49,7 +49,7 @@ router.post('/criarUsuario', async (req, res, next) => {
 });
 
 // Rota para listar todos os usuários
-router.get('/listarUsuarios', async (req, res, next) => {
+router.get('/listarUsuarios', jwtMiddleware, isAdmin, async (req, res, next) => {
     try {
         const usuarios = await UserServices.listUsers();
         res.status(200).json(usuarios);

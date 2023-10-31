@@ -79,8 +79,18 @@ function notLoggedIn(req, res, next) {
   next();
   };
 
+  // Função para verificar se o usuário é admin
+function isAdmin(req, res, next) {
+    if (req.user.role !== 'admin') {
+      res.status(401).send('Você não tem permissão para realizar essa ação!');
+    }
+  
+    next();
+  }
+
 module.exports = {
     loginMiddleware,
     jwtMiddleware,
-    notLoggedIn
+    notLoggedIn,
+    isAdmin
   };

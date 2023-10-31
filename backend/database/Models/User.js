@@ -23,7 +23,13 @@ const User = sequelize.define('users', {
     age: {
         type: Sequelize.DataTypes.INTEGER,
         allowNull: false,
-    }
+    },
+    role: {
+        type: Sequelize.DataTypes.ENUM,
+        allowNull: false,
+        values: ['admin', 'user'],
+        defaultValue: 'user',
+    },
 });
 
 User.sync({alter: false, force: false})

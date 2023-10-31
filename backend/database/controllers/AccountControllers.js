@@ -1,6 +1,6 @@
 const AccountServices = require('../Services/AccountServices.js');
 const router = require('express').Router();
-const {loginMiddleware,notLoggedIn,jwtMiddleware} = require('../../middlewares/login.js');
+const {loginMiddleware,notLoggedIn,jwtMiddleware, isAdmin} = require('../../middlewares/login.js');
 
 // Rota para criar uma nova conta
 router.post('/criarConta',jwtMiddleware, async (req, res, next) => {
@@ -16,7 +16,7 @@ router.post('/criarConta',jwtMiddleware, async (req, res, next) => {
 });
 
 // Rota para listar todas as contas
-router.get('/listarContas',jwtMiddleware, async (req, res, next) => {
+router.get('/listarContas',jwtMiddleware, isAdmin, async (req, res, next) => {
     try {
         const contas = await AccountServices.listAccounts();
         res.status(200).json(contas);

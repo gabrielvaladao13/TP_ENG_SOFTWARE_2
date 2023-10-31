@@ -1,6 +1,6 @@
 const TransactionServices = require('../Services/TransactionServices.js');
 const router = require('express').Router();
-const {loginMiddleware,notLoggedIn,jwtMiddleware} = require('../../middlewares/login.js');
+const {loginMiddleware,notLoggedIn,jwtMiddleware, isAdmin} = require('../../middlewares/login.js');
 
 // Rota para criar uma nova transação
 router.post('/criarTransacao',jwtMiddleware, async (req, res, next) => {
