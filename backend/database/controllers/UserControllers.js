@@ -60,7 +60,7 @@ router.get('/listarUsuarios', jwtMiddleware, isAdmin, async (req, res, next) => 
 });
 
 // Rota para obter informações de um usuário por ID
-router.get('/usuario/:id', async (req, res, next) => {
+router.get('/usuario/:id', jwtMiddleware, isAdmin, async (req, res, next) => {
     const userId = req.params.id;
     try {
         const usuario = await UserServices.listUserById(userId);
@@ -73,7 +73,7 @@ router.get('/usuario/:id', async (req, res, next) => {
 
 // Rota para atualizar informações de um usuário por ID
 router.put('/usuario/:id', async (req, res, next) => {
-    const userId = req.params.id;
+    const userId = req.params.id;   
     const body = req.body;
     try {
         const usuario = await UserServices.updateUser(userId, body);
