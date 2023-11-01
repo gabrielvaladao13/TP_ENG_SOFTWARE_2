@@ -72,8 +72,8 @@ router.get('/usuario/:id', jwtMiddleware, isAdmin, async (req, res, next) => {
 });
 
 // Rota para atualizar informações de um usuário por ID
-router.put('/usuario/:id', async (req, res, next) => {
-    const userId = req.params.id;   
+router.put('/usuario/:id',jwtMiddleware, async (req, res, next) => {
+    const userId = req.user.id;   
     const body = req.body;
     try {
         const usuario = await UserServices.updateUser(userId, body);

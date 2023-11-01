@@ -57,13 +57,17 @@ class TransactionServices {
             filtroDinamico.accountId = account.id;
         }
         else{
-            const account = await Account.findAll({ // quando não passa a conta especifica que quer deve pegar todas as transações
-                                                    // do usuario mas não ta dando certo
+            //nesse caso preciso, a partir do userId, encontrar todas suas contas e iterar sobre os accountId para encontrar todas as transações do usuario
+            const accounts = await Account.findAll({
                 where: {
-                    userId:  userId,
+                    userId: userId,
                 }
             });
-            // filtroDinamico.accountId = account.id;
+            let accountsId = [];
+            accounts.forEach(account => {
+                accountsId.push(account.id);
+            });
+            filtroDinamico.accountId = accountsId;
         }
         if (body.period_start && body.period_end) {
             filtroDinamico.createdAt = {
