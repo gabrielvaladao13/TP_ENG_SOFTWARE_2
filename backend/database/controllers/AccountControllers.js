@@ -38,7 +38,7 @@ router.get('/conta/:id',jwtMiddleware, async (req, res, next) => {
     }
 });
 
-// Rota para obter informações de uma conta por ID de usuário
+// Rota para obter informações das contas por ID de usuário
 //função funcionando com o id do login
 router.get('/conta/usuario/:id',jwtMiddleware, async (req, res, next) => {
     const userId = req.user.id;
@@ -50,7 +50,6 @@ router.get('/conta/usuario/:id',jwtMiddleware, async (req, res, next) => {
         next(error);
     }
 });
-
 
 // Rota para atualizar informações de uma conta por ID
 router.put('/conta/:id',jwtMiddleware, async (req, res, next) => {

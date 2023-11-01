@@ -85,7 +85,7 @@ router.put('/usuario/:id', async (req, res, next) => {
 });
 
 // Rota para excluir um usuário por ID
-router.delete('/usuario/:id', async (req, res, next) => {
+router.delete('/usuario/:id', jwtMiddleware, isAdmin, async (req, res, next) => {
     const userId = req.params.id;
     try {
         const usuario = await UserServices.deleteUser(userId);

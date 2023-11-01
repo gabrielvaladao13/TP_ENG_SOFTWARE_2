@@ -1,4 +1,6 @@
 const User = require('../Models/User.js');
+const Account = require('../Models/Account.js');
+const AccountServices = require('../Services/AccountServices.js');
 
 class UserServices {
     async createUser(name, email, password, age, role) {
@@ -31,6 +33,16 @@ class UserServices {
     }
     async deleteUser(id) {
         const user = await User.findByPk(id);
+        // Excluir todas as contas do usuário
+        const accounts = await Account.findAll({
+            where: {
+                userId: id
+            }
+        });
+        for (const account of accounts) {
+            await AccountServices.deleteAccount(account.id);
+        }
+        // Deletar usuário
         await user.destroy();
         return user;
     }

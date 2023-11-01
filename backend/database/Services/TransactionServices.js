@@ -103,9 +103,16 @@ class TransactionServices {
 
     async updateTransaction(transactionId, body) {
         const transaction = await Transaction.findByPk(transactionId);
+        // Valor Original
+        const originalValue = transaction.value;
+
         transaction.update(
             body
         );
+        
+        // Diferenca entre o valor original e o novo valor
+        const difference = transaction.value - originalValue;
+        const account = await AccountServices.updateBalanceByAccountById(transaction.accountId, difference);   
         return transaction;
     }
     async deleteTransaction(id) {

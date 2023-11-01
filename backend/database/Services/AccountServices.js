@@ -1,4 +1,5 @@
 const Account = require('../Models/Account.js');
+const Transaction = require('../Models/Transaction.js');
 
 class AccountServices {
     async createAccount(agency, balance, userId) {
@@ -52,6 +53,16 @@ class AccountServices {
     // }
     async deleteAccount(id) {
         const account = await this.listAccountById(id);
+        // Excluir todas as transações da conta
+        const transactions = await Transaction.findAll({
+            where: {
+                accountId: id
+            }
+        });
+        for(const transaction of transactions) {
+            await transaction.destroy();
+        }
+        // Deletar conta
         await account.destroy();
         return account;
     }
