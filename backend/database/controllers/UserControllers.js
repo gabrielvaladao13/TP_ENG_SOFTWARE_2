@@ -73,8 +73,16 @@ router.get('/usuario/:id', jwtMiddleware, isAdmin, async (req, res, next) => {
 
 // Rota para atualizar informações de um usuário por ID
 router.put('/usuario/:id',jwtMiddleware, async (req, res, next) => {
-    const userId = req.user.id;   
+    let userId;
     const body = req.body;
+    // Se o usuário for admin, ele pode atualizar qualquer usuário
+    if (req.user.role == 'admin') {
+        userId = req.params.id;
+    } else {
+        userId = req.user.id;
+        delete body.role; // Não permite o usuário alterar o próprio role
+    }
+    
     try {
         const usuario = await UserServices.updateUser(userId, body);
         res.status(200).json(usuario);
