@@ -36,7 +36,6 @@ const Transaction = sequelize.define('transactions', {
         type: Sequelize.DataTypes.DATEONLY,
         allowNull: false,
     }
-    // adicionar atributo data no futuro
 });
 
 Transaction.belongsTo(Account, {

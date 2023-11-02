@@ -45,15 +45,10 @@ class AccountServices {
         await account.save();
         return account;
     }
-    // async resetBalanceByAccountById(id) {
-    //     const account = await Account.findByPk(id);
-    //     account.balance = 0;
-    //     await account.save();
-    //     return account;
-    // }
+
     async deleteAccount(id) {
         const account = await this.listAccountById(id);
-        // Excluir todas as transações da conta
+        // Deletar todas as transações da conta
         const transactions = await Transaction.findAll({
             where: {
                 accountId: id

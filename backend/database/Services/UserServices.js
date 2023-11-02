@@ -33,7 +33,7 @@ class UserServices {
     }
     async deleteUser(id) {
         const user = await User.findByPk(id);
-        // Excluir todas as contas do usuário
+        // Deletar todas as contas do usuário
         const accounts = await Account.findAll({
             where: {
                 userId: id

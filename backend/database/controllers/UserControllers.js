@@ -75,7 +75,7 @@ router.get('/usuario/:id', jwtMiddleware, isAdmin, async (req, res, next) => {
 router.put('/usuario/:id',jwtMiddleware, async (req, res, next) => {
     let userId;
     const body = req.body;
-    // Se o usuário for admin, ele pode atualizar qualquer usuário
+    // Admin pode atualizar qualquer usuário
     if (req.user.role == 'admin') {
         userId = req.params.id;
     } else {

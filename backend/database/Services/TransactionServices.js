@@ -7,7 +7,7 @@ const { use } = require('passport');
 class TransactionServices {
     async createTransaction(type, category, description, value, agency, date, userId) {
         value = await this.checkAndTreatTransactionType(type, value);
-        
+
         const account = await Account.findOne({
             where: {
                 agency: agency, 
@@ -20,7 +20,7 @@ class TransactionServices {
             "category": category,
             "description": description,
             "value": value,
-            "accountId": account.id,//gambirra ate arrumar o login
+            "accountId": account.id,
             "date": date 
         });
 
@@ -30,7 +30,7 @@ class TransactionServices {
         return transaction;
     }
 
-    // Se type for despesa, o valor é negativo e se for receita, o valor é positivo, para que o saldo seja atualizado corretamente
+    // Trata sinal do valor da transação de acordo com o tipo
    async checkAndTreatTransactionType(type, value) {
         if (type === "despesa") {
             return - value;
@@ -64,7 +64,7 @@ class TransactionServices {
             filtroDinamico.accountId = account.id;
         }
         else{
-            //nesse caso preciso, a partir do userId, encontrar todas suas contas e iterar sobre os accountId para encontrar todas as transações do usuario
+            // Encontra todas as contas do usuário para encontrar todas suas transações
             const accounts = await Account.findAll({
                 where: {
                     userId: userId,
@@ -114,7 +114,8 @@ class TransactionServices {
 
     async updateTransaction(transactionId, body) {
         const transaction = await Transaction.findByPk(transactionId);
-        // Valor Original
+
+        // Valor antes da atualização
         const originalValue = transaction.value;
 
         transaction.update(
@@ -123,6 +124,7 @@ class TransactionServices {
         
         // Diferenca entre o valor original e o novo valor
         const difference = transaction.value - originalValue;
+        // Atualiza o saldo da conta
         const account = await AccountServices.updateBalanceByAccountById(transaction.accountId, difference);   
         return transaction;
     }

@@ -39,7 +39,6 @@ router.get('/conta/:id',jwtMiddleware, async (req, res, next) => {
 });
 
 // Rota para obter informações das contas por ID de usuário
-//função funcionando com o id do login
 router.get('/conta/usuario/:id',jwtMiddleware, async (req, res, next) => {
     let userId;
     // Se o usuário for admin, ele pode ver contas de qualquer usuário
@@ -70,19 +69,6 @@ router.put('/conta/:id',jwtMiddleware, async (req, res, next) => {
         next(error);
     }
 });
-
-
-// // Rota para redefinir o saldo de uma conta por ID
-// router.put('/conta/:id/reset',jwtMiddleware, async (req, res, next) => {
-//     const accountId = req.params.id;
-//     try {
-//         const conta = await AccountServices.resetBalanceByAccount(accountId);
-//         res.status(200).json(conta);
-//     } catch (error) {
-//         console.log(error);
-//         next(error);
-//     }
-// });
 
 // Rota para excluir uma conta por ID
 router.delete('/conta/:id',jwtMiddleware, async (req, res, next) => {
