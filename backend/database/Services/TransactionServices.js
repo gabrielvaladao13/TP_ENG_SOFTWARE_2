@@ -6,9 +6,8 @@ const { use } = require('passport');
 
 class TransactionServices {
     async createTransaction(type, category, description, value, agency, date, userId) {
-        if (type === "despesa") {
-            value*=-1;
-        }
+        value = await this.checkAndTreatTransactionType(type, value);
+        
         const account = await Account.findOne({
             where: {
                 agency: agency, 
@@ -30,6 +29,14 @@ class TransactionServices {
 
         return transaction;
     }
+
+    // Se type for despesa, o valor é negativo e se for receita, o valor é positivo, para que o saldo seja atualizado corretamente
+   async checkAndTreatTransactionType(type, value) {
+        if (type === "despesa") {
+            return - value;
+        }
+        return value;
+   }
 
     async listTransactionById(id) {
         const transaction = await Transaction.findByPk(id);
