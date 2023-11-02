@@ -31,15 +31,10 @@ function loginMiddleware(req, res, next) {
   })(req, res, next);
 }
 
-function cookieExtractor(req) { 
-  let token = null; 
- 
-  if (req && req.cookies) { 
-    token = req.cookies['jwt']; 
-  } 
- 
-  return token; 
-} 
+// Função para extrair o token do cookie
+function cookieExtractor(req) {
+  return req.cookies['jwt'] || null;
+}
 
 // Middleware para verificar o token JWT
 function jwtMiddleware(req, res, next) {
