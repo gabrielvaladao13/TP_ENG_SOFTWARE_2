@@ -2,6 +2,7 @@ const Transaction = require('../Models/Transaction.js');
 const Account = require('../Models/Account.js');
 const AccountServices = require('../Services/AccountServices.js');
 const { use } = require('passport');
+const { Op } = require("sequelize");	
 
 
 class TransactionServices {
@@ -58,54 +59,37 @@ class TransactionServices {
             const account = await Account.findOne({
                 where: {
                     agency: body.agency, 
-                    userId:  userId,
+                    userId: userId
                 }
             });
             filtroDinamico.accountId = account.id;
         }
         else{
-            // Encontra todas as contas do usuário para encontrar todas suas transações
             const accounts = await Account.findAll({
                 where: {
                     userId: userId,
                 }
             });
-            let accountsId = [];
-            accounts.forEach(account => {
-                accountsId.push(account.id);
-            });
-            filtroDinamico.accountId = accountsId;
+            filtroDinamico.accountId = accounts.map(account => account.id);
         }
-        if (body.period_start && body.period_end) {
-            filtroDinamico.createdAt = {
-                [Op.between]: [body.period_start, body.period_end]
+
+        function applyRangeFilter(startAttr, endAttr, filterKey) {
+            if (body[startAttr] || body[endAttr]) {
+                filtroDinamico[filterKey] = {};
+
+                if (body[startAttr]) {
+                    filtroDinamico[filterKey][Op.gte] = body[startAttr];
+                }
+
+                if (body[endAttr]) {
+                    filtroDinamico[filterKey][Op.lte] = body[endAttr];
+                }
             }
         }
-        if (body.period_start && !body.period_end) {
-            filtroDinamico.createdAt = {
-                [Op.gte]: body.period_start
-            }
-        }
-        if (!body.period_start && body.period_end) {
-            filtroDinamico.createdAt = {
-                [Op.lte]: body.period_end
-            }
-        }
-        if (body.value_min && body.value_max) {
-            filtroDinamico.value = {
-                [Op.between]: [body.value_min, body.value_max]
-            }
-        }
-        if (body.value_min && !body.value_max) {
-            filtroDinamico.value = {
-                [Op.gte]: body.value_min
-            }
-        }
-        if (!body.value_min && body.value_max) {
-            filtroDinamico.value = {
-                [Op.lte]: body.value_max
-            }
-        }
+
+        applyRangeFilter("period_start", "period_end", "createdAt");
+        applyRangeFilter("value_min", "value_max", "value");
+
         const transactions = await Transaction.findAll({
             where: filtroDinamico
         });
