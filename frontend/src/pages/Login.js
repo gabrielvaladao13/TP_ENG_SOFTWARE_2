@@ -2,6 +2,8 @@ import React from 'react';
 import { Button, TextField, Typography, Container, CssBaseline, Paper } from '@mui/material';
 import { styled } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import axios from 'axios';
 
 const StyledPaper = styled(Paper)({
   display: 'flex',
@@ -20,9 +22,27 @@ const StyledForm = styled('form')({
 
 const Login = () => {
     const navigate = useNavigate();
-    const handleSubmit = () => {
-        navigate('/Accounts');
-    };
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    function handleEmailChange(event) {
+        setEmail(event.target.value);
+    }
+
+    function handlePasswordChange(event) {
+        setPassword(event.target.value);
+    }
+
+    function handleSubmit(event){
+        try {
+            event.preventDefault();
+            axios.post('/api/usuarios/login', {email, password}).then((res) => console.log(res));
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     
     return (
         <Container component="main" maxWidth="xs">
@@ -31,27 +51,27 @@ const Login = () => {
             <Typography component="h1" variant="h5">
             Login
             </Typography>
-            <StyledForm>
+            <StyledForm onSubmit={handleSubmit} >
             <TextField
                 variant="outlined"
                 margin="normal"
-                required
                 fullWidth
                 id="email"
                 label="Endereço de E-mail"
                 name="email"
                 autoComplete="email"
+                required onChange={handleEmailChange} value={email}
             />
             <TextField
                 variant="outlined"
                 margin="normal"
-                required
                 fullWidth
                 name="password"
                 label="Senha"
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                required onChange={handlePasswordChange} value={password}
             />
             <Button
                 type="submit"

@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
+import axios from 'axios';
 
 
 import Login from './pages/Login';
@@ -10,6 +10,7 @@ import Transactions from './pages/Transactions.js';
 import User from './pages/User';
 
 const App = () => {
+  axios.defaults.baseURL = process.env.REACT_APP_API_URL;
   return (
     <div className='App'>
         <BrowserRouter>
