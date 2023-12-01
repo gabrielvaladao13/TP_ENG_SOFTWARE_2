@@ -19,6 +19,11 @@ const StyledForm = styled('form')({
     marginTop: (theme) => theme.spacing(1),
 });
 
+const LogoImage = styled('img')({
+    width: '50%',
+    marginBottom: '20px',
+});
+
 
 const Login = () => {
     const navigate = useNavigate();
@@ -41,7 +46,7 @@ const Login = () => {
             alert('Por favor, preencha todos os campos.');
             return;
         }
-        axios.post('/api/usuarios/login', { email, password }).then((res) => navigate('/accounts'))
+        axios.post('/api/usuarios/login', { email, password }, { withCredentials: true }).then((res) => navigate('/accounts'))
             .catch((err) => alert('Login Failed.'));
 
     }

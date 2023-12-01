@@ -140,7 +140,7 @@ const Accounts = () => {
         open={deleteConfirmation.open}
         onCancel={handleCancelDelete}
         onConfirm={handleConfirmDelete}
-        itemText={`a conta com ID ${deleteConfirmation.account?.id}`}
+        itemText={`a conta ${deleteConfirmation.account?.conta}`}
       />
 
       <NewAccountDialog

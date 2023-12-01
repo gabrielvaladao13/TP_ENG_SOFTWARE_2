@@ -12,11 +12,15 @@ import {
   MenuItem,
 } from '@mui/material';
 
+import Logo from '../asserts/Logo.svg';
+
+
+
 const NewTransactionDialog = ({ open, onClose, onConfirm, nextTransactionId }) => {
   const [newTransaction, setNewTransaction] = useState({
     type: 'receita',
     category: '',
-    account: '',
+    agency: '',
     value: '',
     date: '',
   });
@@ -53,9 +57,9 @@ const NewTransactionDialog = ({ open, onClose, onConfirm, nextTransactionId }) =
         <TextField
           margin="normal"
           fullWidth
-          label="Conta"
-          value={newTransaction.account}
-          onChange={(e) => handleFieldChange('account', e.target.value)}
+          label="Agência"
+          value={newTransaction.agency}
+          onChange={(e) => handleFieldChange('agency', e.target.value)}
         />
         <TextField
           margin="normal"
@@ -74,7 +78,7 @@ const NewTransactionDialog = ({ open, onClose, onConfirm, nextTransactionId }) =
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Cancelar</Button>
-        <Button onClick={handleConfirm}  variant="contained" color="primary">
+        <Button onClick={handleConfirm}  variant="Agenciained" color="primary">
           Confirmar
         </Button>
       </DialogActions>

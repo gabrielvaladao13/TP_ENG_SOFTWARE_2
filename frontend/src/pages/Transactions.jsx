@@ -29,10 +29,10 @@ const StyledPaper = styled(Paper)({
 });
 
 const transactionData = [
-    { id: 1, type: 'receita', category: 'lazer', account: '123456-7', value: 500.25, date: '2023-11-30' },
-    { id: 2, type: 'despesa', category: 'supermercado', account: '765432-1', value: 1200.75, date: '2023-11-29' },
-    { id: 3, type: 'receita', category: 'restaurante', account: '987654-3', value: 300.0, date: '2023-11-28' },
-    { id: 4, type: 'despesa', category: 'lazer', account: '987654-3', value: 300.0, date: '2023-11-27' },
+    { id: 1, type: 'receita', category: 'lazer', agency: 'inter', value: 500.25, date: '2023-11-30' },
+    { id: 2, type: 'despesa', category: 'supermercado', agency: 'banco do brasil', value: 1200.75, date: '2023-11-29' },
+    { id: 3, type: 'receita', category: 'restaurante', agency: 'caixa', value: 300.0, date: '2023-11-28' },
+    { id: 4, type: 'despesa', category: 'lazer', agency: 'nubank', value: 300.0, date: '2023-11-27' },
 ];
 
 const Transactions = () => {
@@ -101,7 +101,7 @@ const Transactions = () => {
                             <TableCell>ID</TableCell>
                             <TableCell>Tipo</TableCell>
                             <TableCell>Categoria</TableCell>
-                            <TableCell>Conta</TableCell>
+                            <TableCell>Agência</TableCell>
                             <TableCell>Valor</TableCell>
                             <TableCell>Data</TableCell>
                             <TableCell>Ações</TableCell>
@@ -113,7 +113,7 @@ const Transactions = () => {
                                 <TableCell style={{ width: '15%' }}>{transaction.id}</TableCell>
                                 <TableCell style={{ width: '15%' }}>{transaction.type}</TableCell>
                                 <TableCell style={{ width: '15%' }}>{transaction.category}</TableCell>
-                                <TableCell style={{ width: '15%' }}>{transaction.account}</TableCell>
+                                <TableCell style={{ width: '15%' }}>{transaction.agency}</TableCell>
                                 <TableCell style={{ width: '15%' }}>{transaction.value.toFixed(2)}</TableCell>
                                 <TableCell style={{ width: '15%' }}>{transaction.date}</TableCell>
                                 <TableCell style={{ width: '10%' }}>
