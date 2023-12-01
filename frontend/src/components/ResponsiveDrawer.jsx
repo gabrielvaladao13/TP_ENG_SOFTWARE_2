@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate, BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { useNavigate, BrowserRouter, Routes, Route, Link, Outlet } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import AppBar from '@mui/material/AppBar';
@@ -17,9 +17,9 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import Paper from '@mui/material/Paper';
 
-import Accounts from '../pages/Accounts.jsx';
-import Transactions from '../pages/Transactions.jsx';
-import User from '../pages/User.jsx';
+import Accounts from '../pages/Accounts';
+import Transactions from '../pages/Transactions';
+import User from '../pages/User';
 
 const drawerWidth = 240;
 
@@ -47,7 +47,7 @@ const ResponsiveDrawer = () => {
         <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
           <Toolbar>
             <Typography variant="h6" noWrap component="div">
-              Página Principal
+              Controle Financeiro
             </Typography>
           </Toolbar>
         </AppBar>
@@ -57,7 +57,7 @@ const ResponsiveDrawer = () => {
           sx={{
             width: drawerWidth,
             flexShrink: 0,
-            '& .MuiDrawer-paper': { width: drawerWidth, boxSizing: 'border-box' },
+            '& .MuiDrawer-paper': { width: drawerWidth, boxSizing: 'border-box'},
           }}
         >
           <Toolbar />
