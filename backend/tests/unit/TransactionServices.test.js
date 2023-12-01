@@ -12,7 +12,7 @@ jest.mock('../../database/Models/Transaction');
 // Mock para a classe Account
 jest.mock('../../database/Models/Account');
 
-describe('TransactionServices', () => {
+describe('TransactionServicesTest', () => {
     afterEach(() => {
         jest.clearAllMocks();
     });
