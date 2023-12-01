@@ -46,7 +46,7 @@ const Login = () => {
             alert('Por favor, preencha todos os campos.');
             return;
         }
-        axios.post('/api/usuarios/login', { email, password }, { withCredentials: true }).then((res) => navigate('/accounts'))
+        axios.post('/api/usuarios/login', { email, password }).then((res) => navigate('/accounts'))
             .catch((err) => alert('Login Failed.'));
 
     }

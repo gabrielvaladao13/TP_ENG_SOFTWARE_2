@@ -1,12 +1,15 @@
 const UserServices = require('../Services/UserServices.js');
 const router = require('express').Router();
-const {loginMiddleware,notLoggedIn,jwtMiddleware, isAdmin} = require('../../middlewares/login.js');
-  
+const { loginMiddleware, notLoggedIn, jwtMiddleware, isAdmin } = require('../../middlewares/login.js');
+const passport = require('passport');
+const jwt = require('jsonwebtoken');
+
 //Rota de login
 router.post('/login',
     notLoggedIn,
     loginMiddleware
 );
+
 
 //Rota para retornar o usuario logado
 router.get('/me',
@@ -39,7 +42,7 @@ router.get('/logout',
 // Rota para criar um novo usuário
 router.post('/criarUsuario', jwtMiddleware, isAdmin, async (req, res, next) => {
     try {
-        const { name, email, password, age, role} = req.body;
+        const { name, email, password, age, role } = req.body;
         const usuario = await UserServices.createUser(name, email, password, age, role);
         res.status(201).json(usuario);
     } catch (error) {
@@ -72,7 +75,7 @@ router.get('/usuario/:id', jwtMiddleware, isAdmin, async (req, res, next) => {
 });
 
 // Rota para atualizar informações de um usuário por ID
-router.put('/usuario/:id',jwtMiddleware, async (req, res, next) => {
+router.put('/usuario/:id', jwtMiddleware, async (req, res, next) => {
     let userId;
     const body = req.body;
     // Admin pode atualizar qualquer usuário
@@ -82,7 +85,7 @@ router.put('/usuario/:id',jwtMiddleware, async (req, res, next) => {
         userId = req.user.id;
         delete body.role; // Não permite o usuário alterar o próprio role
     }
-    
+
     try {
         const usuario = await UserServices.updateUser(userId, body);
         res.status(200).json(usuario);
