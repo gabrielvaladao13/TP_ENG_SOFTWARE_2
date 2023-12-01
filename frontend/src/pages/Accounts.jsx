@@ -13,6 +13,8 @@ import {
 import { styled } from '@mui/system';
 import DeleteConfirmationDialog from '../components/DeleteConfirmationDialog';
 import NewAccountDialog from '../components/NewAccountDialog';
+import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from '@mui/material/IconButton';
 
 const StyledPaper = styled(Paper)({
   display: 'flex',
@@ -110,13 +112,13 @@ const Accounts = () => {
                 <TableCell style={{ width: '25%' }}>{account.conta}</TableCell>
                 <TableCell style={{ width: '25%' }}>{account.saldo.toFixed(2)}</TableCell>
                 <TableCell style={{ width: '10%' }}>
-                  <Button
+                  <IconButton
                     variant="contained"
                     color="error"
                     onClick={() => handleOpenDeleteConfirmation(account)}
                   >
-                    Deletar
-                  </Button>
+                    <DeleteIcon />
+                  </IconButton>
                 </TableCell>
               </TableRow>
             ))}
