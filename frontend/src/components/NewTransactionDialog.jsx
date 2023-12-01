@@ -74,7 +74,7 @@ const NewTransactionDialog = ({ open, onClose, onConfirm, nextTransactionId }) =
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Cancelar</Button>
-        <Button onClick={handleConfirm} color="primary">
+        <Button onClick={handleConfirm}  variant="contained" color="primary">
           Confirmar
         </Button>
       </DialogActions>
