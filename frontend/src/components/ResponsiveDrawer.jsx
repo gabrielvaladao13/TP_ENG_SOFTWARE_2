@@ -17,9 +17,9 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import Paper from '@mui/material/Paper';
 
-import Accounts from '../pages/Accounts';
-import Transactions from '../pages/Transactions.js';
-import User from '../pages/User';
+import Accounts from '../pages/Accounts.jsx';
+import Transactions from '../pages/Transactions.jsx';
+import User from '../pages/User.jsx';
 
 const drawerWidth = 240;
 

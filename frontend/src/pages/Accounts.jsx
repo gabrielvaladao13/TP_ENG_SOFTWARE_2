@@ -6,8 +6,8 @@ const StyledPaper = styled(Paper)({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  margin: '5%',
-  marginLeft: '2%',
+  margin: '10%',
+  marginLeft: '7%',
   borderRadius: 20,
   padding: '3%',
   width: '100%',
@@ -25,15 +25,15 @@ const Accounts = () => {
   return (
       <StyledPaper elevation={3}>
         <Typography component="h1" variant="h5">
-          Accounts
+          Contas
         </Typography>
         <TableContainer>
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Agency</TableCell>
-                <TableCell>Account Number</TableCell>
-                <TableCell>Balance</TableCell>
+                <TableCell>Agencia</TableCell>
+                <TableCell>Conta</TableCell>
+                <TableCell>Saldo</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

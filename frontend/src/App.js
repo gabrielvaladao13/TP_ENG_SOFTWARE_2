@@ -4,9 +4,9 @@ import axios from 'axios';
 
 
 import Login from './pages/Login';
-import ResponsiveDrawer from './components/ResponsiveDrawer.js';
+import ResponsiveDrawer from './components/ResponsiveDrawer';
 import Accounts from './pages/Accounts';
-import Transactions from './pages/Transactions.js';
+import Transactions from './pages/Transactions';
 import User from './pages/User';
 
 const App = () => {
