@@ -15,10 +15,6 @@ jest.mock('../../database/Models/Account', () => ({
     findAll: jest.fn(),
 }));
 
-jest.mock('../../database/Services/AccountServices', () => ({
-    deleteAccount: jest.fn(),
-}));
-
 jest.mock('../../database/Models/Transaction', () => ({
     belongsTo: jest.fn(),
 }));
