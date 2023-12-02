@@ -86,6 +86,39 @@ describe('listUsers', () => {
 
 });
 
+describe('listUserById', () => {
+    beforeEach(() => {
+        jest.resetAllMocks();
+        jest.clearAllMocks();
+    });
+
+    test('listUserById returns user when user is found', async () => {
+        const userId = 1;
+        const mockUser = {
+            id: userId,
+            name: 'Gabriel',
+            email: 'gabriel@example.com',
+            password: 'senha123',
+            age: 22,
+            role: 'user',
+        };
+
+        User.findByPk.mockResolvedValue(mockUser);
+
+        const user = await UserServices.listUserById(userId);
+
+        expect(user).toEqual(mockUser);
+    });
+
+    test('listUserById throws error with "Usuário não encontrado" message when user is not found', async () => {
+        const userId = 1;
+
+        User.findByPk.mockResolvedValue(null);
+
+        await expect(UserServices.listUserById(userId)).rejects.toThrow(new Error('Usuário não encontrado'));
+    });
+});
+
 /* describe('updateUser', () => {
     beforeEach(() => {
         jest.resetAllMocks();

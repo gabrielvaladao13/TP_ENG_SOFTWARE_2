@@ -104,7 +104,7 @@ describe('listAccountById', () => {
         expect(account).toEqual(mockAccount);
     });
 
-    test('listAccountById throws error when account is not found', async () => {
+    test('listAccountById throws error with "Conta não encontrada" message when account is not found', async () => {
         const accountId = 1;
         
         Account.findByPk.mockResolvedValue(null);
@@ -143,7 +143,7 @@ describe('listAccountByUserId', () => {
         expect(accounts).toEqual(mockAccountList);
     });
 
-    test('listAccountByUserId throws error when there are no accounts for the user', async () => {
+    test('listAccountByUserId throws error with "Conta não encontrada" message when there are no accounts for the user', async () => {
         const accountId = 1;
         
         Account.findAll.mockResolvedValue(null);

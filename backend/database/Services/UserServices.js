@@ -20,7 +20,7 @@ class UserServices {
     async listUserById(id) {
         const user = await User.findByPk(id);
         if (user === null) {
-            throw new Error('Ususário não encontrado');
+            throw new Error('Usuário não encontrado');
         }
         return user;
     }
