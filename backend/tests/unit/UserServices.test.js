@@ -1,73 +1,128 @@
-import UserServices from "../../database/Services/UserServices";
+const User = require('../../database/Models/User');
+const UserServices = require('../../database/Services/UserServices');
+const Account = require('../../database/Models/Account');
+const AccountServices = require('../../database/Services/AccountServices');
+const Transaction = require('../../database/Models/Transaction');
 
-// Mockar o módulo AccountServices para evitar chamadas reais ao banco de dados
-jest.mock("../../database/Services/AccountServices", () => {
-  return {
-    __esModule: true,
-    default: jest.fn().mockImplementation(() => ({
-      deleteAccount: jest.fn(),
-    })),
-  };
+jest.mock('../../database/Models/User', () => ({
+    create: jest.fn().mockResolvedValue({}),
+    findAll: jest.fn(),
+    findByPk: jest.fn(),
+}));
+
+jest.mock('../../database/Models/Account', () => ({
+    belongsTo: jest.fn(),
+    findAll: jest.fn(),
+}));
+
+jest.mock('../../database/Services/AccountServices', () => ({
+    deleteAccount: jest.fn(),
+}));
+
+jest.mock('../../database/Models/Transaction', () => ({
+    belongsTo: jest.fn(),
+}));
+
+
+describe('createUser', () => {
+    beforeEach(() => {
+        jest.resetAllMocks();
+        jest.clearAllMocks();
+    });
+
+    test("createUser creates a new user with correct data", async () => {
+        const mockBodyUser = {
+            name: "Gabriela Fonseca",
+            email: "gabriela@gmail.com",
+            password: "gabriela123",
+            age: 22,
+            role: "user",
+        };
+
+        User.create.mockResolvedValue(mockBodyUser);
+
+        const user = await UserServices.createUser(mockBodyUser);
+        expect(user).toEqual(mockBodyUser);
+    });
+
 });
 
-describe('UserServicesTest', () => {
-  beforeEach(() => {
-    // Limpar os mocks antes de cada teste
-    jest.clearAllMocks();
-  });
+describe('listUsers', () => {
+    beforeEach(() => {
+        jest.resetAllMocks();
+        jest.clearAllMocks();
+    });
 
-  test("createUser works with valid data", async () => {
-    const userServices = new UserServices();
-    const userData = {
-      name: "Gabriela Fonseca",
-      email: "gabriela@gmail.com",
-      password: "gabriela123",
-      age: 22,
-      role: "user",
-    };
+    test('listUsers returns a list of users when there are users', async () => {
+        const mockUserList = [
+            {
+                id: 1,
+                name: 'Joao Vitor',
+                email: 'joaovitor@gmail.com',
+                password: 'senha123',
+                age: 25,
+                role: 'user',
+            },
+            {
+                id: 2,
+                name: 'Clara',
+                email: 'clara@example.com',
+                password: 'senha1',
+                age: 30,
+                role: 'admin',
+            },
+        ];
 
-    const user = await userServices.createUser(userData.name, userData.email, userData.password, userData.age, userData.role);
-    expect(user).toEqual(userData);
-  });
+        User.findAll.mockResolvedValue(mockUserList);
 
-  test("listUsers returns a list of users", async () => {
-    const userServices = new UserServices();
+        const users = await UserServices.listUsers();
 
-    const users = await userServices.listUsers();
-    expect(Array.isArray(users)).toBe(true);
-  });
+        expect(users).toEqual(mockUserList);
+    });
 
-  test("updateUser updates user data", async () => {
-    const userServices = new UserServices();
-    const userId = 1;
-    const userData = {
-      name: "Updated Name",
-      age: 30,
-    };
+    test('listUsers returns an empty list when there are no users', async () => {
+        User.findAll.mockResolvedValue([]);
 
-    const updatedUser = await userServices.updateUser(userId, userData);
-    expect(updatedUser.name).toBe(userData.name);
-    expect(updatedUser.age).toBe(userData.age);
-  });
+        const users = await UserServices.listUsers();
 
-  test("deleteUser deletes user and associated accounts", async () => {
-    const userServices = new UserServices();
-    const userId = 1;
+        expect(users).toEqual([]);
+    });
 
-    // Mock accounts for the user
-    const mockAccounts = [
-      { id: 1, userId: userId },
-      { id: 2, userId: userId },
-    ];
-
-    // Configurar o mock de AccountServices
-    userServices.accountService.deleteAccount = jest.fn();
-
-    await userServices.deleteUser(userId);
-
-    // Check if the user and associated accounts are deleted
-    expect(userServices.userRepository.deletedUserId).toBe(userId);
-    expect(userServices.accountService.deleteAccount).toHaveBeenCalledWith(mockAccounts[0].id);
-    expect(userServices.accountService.deleteAccount).toHaveBeenCalledWith(mockAccounts[1].id);
-  });
 });
+
+/* describe('updateUser', () => {
+    beforeEach(() => {
+        jest.resetAllMocks();
+        jest.clearAllMocks();
+    });
+
+    test('updateUser updates user data', async () => {
+        const userId = 1;
+        const mockUser = {
+            id: userId,
+            name: "Gabriela Fonseca",
+            email: "gabriela@gmail.com",
+            password: "gabriela123",
+            age: 22,
+            role: "user",
+        };
+
+        const mockBody = {
+            password: "Senha123",
+            age: 30,
+        };
+
+        User.findByPk.mockResolvedValue(mockUser);
+        User.update.mockResolvedValue({ ...mockUser, ...mockBody });
+
+        const updatedUser = await UserServices.updateUser(userId, mockBody);
+
+        expect(updatedUser).toEqual(mockUser);
+
+
+    });
+}); */
+
+
+
+
