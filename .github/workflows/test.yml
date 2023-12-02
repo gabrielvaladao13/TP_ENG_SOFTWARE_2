@@ -1,9 +1,7 @@
 name: Unit Tests
 
-on: 
-  push:
-    paths:
-     - backend/**
+on:[push]
+  
 
 jobs:
   unit-tests:
