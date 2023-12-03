@@ -34,7 +34,7 @@ const User = sequelize.define('users', {
 
 User.sync({alter: false, force: false})
     .then(() => {
-        console.log("Tabela de Usuários criada")
+        //console.log("Tabela de Usuários criada")
     })
     .catch((error) => {
         console.log("Erro ao criar tabela de Usuários: " + error)

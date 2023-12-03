@@ -35,7 +35,7 @@ User.hasMany(Account, {
 
 Account.sync({alter: false, force: false})
     .then(() => {
-        console.log("Tabela de Contas criada")
+        //console.log("Tabela de Contas criada")
     })
     .catch((error) => {
         console.log("Erro ao criar tabela de Contas: " + error)

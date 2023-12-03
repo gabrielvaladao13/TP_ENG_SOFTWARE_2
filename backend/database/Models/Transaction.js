@@ -50,7 +50,7 @@ Account.hasMany(Transaction, {
 
 Transaction.sync({alter: false, force: false})
     .then(() => {
-        console.log("Tabela de Transações criada")
+        //console.log("Tabela de Transações criada")
     })
     .catch((error) => {
         console.log("Erro ao criar tabela de Transações: " + error)
