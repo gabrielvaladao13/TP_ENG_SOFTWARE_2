@@ -8,13 +8,16 @@ const { Op } = require("sequelize");
 class TransactionServices {
     async createTransaction(type, category, description, value, agency, date, userId) {
         value = await this.checkAndTreatTransactionType(type, value);
-
+        console.log(agency);
+        console.log(userId);
         const account = await Account.findOne({
             where: {
                 agency: agency, 
                 userId: userId,
             }
         });
+        //console.log(account);
+        console.log(account.id);
 
         const transaction = await Transaction.create({
             "type": type,

@@ -13,6 +13,7 @@ jest.mock('../../database/Models/Transaction', () => ({
 jest.mock('../../database/Models/Account', () => ({
     findAll: jest.fn(),
     findByPk: jest.fn(),
+    findOne: jest.fn(),
 }));
 
 jest.mock('../../database/Models/User', () => ({
@@ -72,3 +73,5 @@ describe('listTransactionById', () => {
 
     });
 });
+
+
