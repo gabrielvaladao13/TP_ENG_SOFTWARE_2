@@ -38,6 +38,13 @@ describe('testeIntegracaoUser', () => {
 
         //console.log(response);
         expect(response.statusCode).toBe(201);
+        expect(response.body).toHaveProperty('id');
+        expect(response.body).toHaveProperty('name');
+        expect(response.body).toHaveProperty('email');
+        expect(response.body).toHaveProperty('password');
+        expect(response.body).toHaveProperty('age');
+        expect(response.body).toHaveProperty('role');
+        
     });
 
     test('listUsers', async () => {

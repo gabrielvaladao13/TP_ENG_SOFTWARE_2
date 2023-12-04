@@ -20,7 +20,7 @@ describe('testeIntegracaoAccount', () => {
                 password: "12345678",
 
             });
-            console.log(id_user);
+            //console.log(id_user);
             expect(response.statusCode).toBe(204);
             expect(response.headers).toHaveProperty('set-cookie');
         });
@@ -37,6 +37,11 @@ describe('testeIntegracaoAccount', () => {
 
         //console.log(response);
         expect(response.statusCode).toBe(201);
+        expect(response.body).toHaveProperty('id');
+        expect(response.body).toHaveProperty('agency');
+        expect(response.body).toHaveProperty('balance');
+        expect(response.body).toHaveProperty('userId');
+
     });
 
     test('listAccounts', async () => {
@@ -76,6 +81,9 @@ describe('testeIntegracaoAccount', () => {
 
         //console.log(response);
         expect(response.statusCode).toBe(200);
+        expect(response.body.agency).toBe(updatedAccount.agency);
+        expect(response.body.balance).toBe(updatedAccount.balance);
+        
     });
 
     test('deleteAccount', async () => {

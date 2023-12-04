@@ -39,6 +39,13 @@ describe('testeIntegracaoAccount', () => {
 
         //console.log(response);
         expect(response.statusCode).toBe(201);
+        expect(response.body).toHaveProperty('id');
+        expect(response.body).toHaveProperty('value');
+        expect(response.body).toHaveProperty('type');
+        expect(response.body).toHaveProperty('category');
+        expect(response.body).toHaveProperty('description');
+        expect(response.body).toHaveProperty('accountId');
+        expect(response.body).toHaveProperty('date');
     });
 
     test('listTransactions', async () => {
@@ -47,6 +54,7 @@ describe('testeIntegracaoAccount', () => {
 
         //console.log(response);
         expect(response.statusCode).toBe(200);
+        
     });
 
     test('listTransactionsByUserId', async () => {
@@ -54,6 +62,8 @@ describe('testeIntegracaoAccount', () => {
         //user id=1
             .get('/api/transacoes/listarTransacoes/1');
         expect(response.statusCode).toBe(200);
+
+
     });
 
     test('updateTransactionById', async () => {
@@ -70,6 +80,12 @@ describe('testeIntegracaoAccount', () => {
             .put(`/api/transacoes/transacao/${id}`)
             .send(updatedTransaction);
         expect(response.statusCode).toBe(200);
+        expect(response.body.value).toBe(updatedTransaction.value);
+        expect(response.body.type).toBe(updatedTransaction.type);
+        expect(response.body.category).toBe(updatedTransaction.category);
+        expect(response.body.description).toBe(updatedTransaction.description);
+        expect(response.body.date).toBe(updatedTransaction.date);
+
     });
 
     test('deleteTransactionById', async () => {
