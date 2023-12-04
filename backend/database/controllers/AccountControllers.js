@@ -39,7 +39,7 @@ router.get('/conta/:id',jwtMiddleware, async (req, res, next) => {
 });
 
 // Rota para obter informações das contas por ID de usuário
-router.get('/conta/usuario',jwtMiddleware, async (req, res, next) => {
+router.get('/conta/usuario/:id',jwtMiddleware, async (req, res, next) => {
     let userId;
     // Se o usuário for admin, ele pode ver contas de qualquer usuário
     if (req.user.role == 'admin') {
