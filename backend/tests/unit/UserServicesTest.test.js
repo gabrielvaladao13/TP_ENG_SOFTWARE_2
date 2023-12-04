@@ -119,38 +119,6 @@ describe('listUserById', () => {
     });
 });
 
-/* describe('updateUser', () => {
-    beforeEach(() => {
-        jest.resetAllMocks();
-        jest.clearAllMocks();
-    });
-
-    test('updateUser updates user data', async () => {
-        const userId = 1;
-        const mockUser = {
-            id: userId,
-            name: "Gabriela Fonseca",
-            email: "gabriela@gmail.com",
-            password: "gabriela123",
-            age: 22,
-            role: "user",
-        };
-
-        const mockBody = {
-            password: "Senha123",
-            age: 30,
-        };
-
-        User.findByPk.mockResolvedValue(mockUser);
-        User.update.mockResolvedValue({ ...mockUser, ...mockBody });
-
-        const updatedUser = await UserServices.updateUser(userId, mockBody);
-
-        expect(updatedUser).toEqual(mockUser);
-
-
-    });
-}); */
 
 
 
