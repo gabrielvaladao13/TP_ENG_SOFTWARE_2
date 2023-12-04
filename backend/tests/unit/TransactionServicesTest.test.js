@@ -37,3 +37,38 @@ describe('checkAndTreatTransactionType', () => {
     });
 
 });
+
+describe('listTransactionById', () => {
+    beforeEach(() => {
+        jest.resetAllMocks();
+        jest.clearAllMocks();
+    });
+
+    test('listTransactionById returns transaction when transaction is found', async () => {
+        const transactionId = 1;
+        const mockTransaction = {
+            id: transactionId,
+            type: 'despesa',
+            category: 'restaurante',
+            description: 'Restaurante meu aniversário',
+            value: 50,
+            accountId: 1,
+            date: new Date(),
+        };
+
+        Transaction.findByPk.mockResolvedValue(mockTransaction);
+
+        const transaction = await TransactionServices.listTransactionById(transactionId);
+
+        expect(transaction).toEqual(mockTransaction);
+    });
+
+    test('listTransactionById throws error with "Transação não encontrada" message when transaction is not found', async () => {
+        const transactionId = 1;
+
+        Transaction.findByPk.mockResolvedValue(null);
+
+        await expect(TransactionServices.listTransactionById(transactionId)).rejects.toThrow(new Error('Transação não encontrada'));
+
+    });
+});
