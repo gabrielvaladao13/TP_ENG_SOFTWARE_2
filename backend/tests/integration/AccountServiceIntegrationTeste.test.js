@@ -8,6 +8,7 @@ const superTest = require('supertest');
 const app = require('../../app');
 const request = superTest.agent(app);
 let id=0;
+let id_user=3;
 
 describe('testeIntegracaoAccount', () => {
     test('testLogins', async () => {
@@ -19,6 +20,7 @@ describe('testeIntegracaoAccount', () => {
                 password: "12345678",
 
             });
+            console.log(id_user);
             expect(response.statusCode).toBe(204);
             expect(response.headers).toHaveProperty('set-cookie');
         });
@@ -56,7 +58,7 @@ describe('testeIntegracaoAccount', () => {
 
     test('listAccountByUserId', async () => {
         const response = await request
-            .get(`/api/contas/conta/usuario/:id`);
+            .get(`/api/contas/conta/${id_user}`);
 
         //console.log(response);
         expect(response.statusCode).toBe(200);
