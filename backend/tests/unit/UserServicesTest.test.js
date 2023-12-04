@@ -8,6 +8,7 @@ jest.mock('../../database/Models/User', () => ({
     create: jest.fn().mockResolvedValue({}),
     findAll: jest.fn(),
     findByPk: jest.fn(),
+    update: jest.fn(),
 }));
 
 jest.mock('../../database/Models/Account', () => ({
@@ -72,7 +73,6 @@ describe('listUsers', () => {
         User.findAll.mockResolvedValue(mockUserList);
 
         const users = await UserServices.listUsers();
-
         expect(users).toEqual(mockUserList);
     });
 
@@ -80,7 +80,6 @@ describe('listUsers', () => {
         User.findAll.mockResolvedValue([]);
 
         const users = await UserServices.listUsers();
-
         expect(users).toEqual([]);
     });
 
@@ -106,7 +105,6 @@ describe('listUserById', () => {
         User.findByPk.mockResolvedValue(mockUser);
 
         const user = await UserServices.listUserById(userId);
-
         expect(user).toEqual(mockUser);
     });
 
@@ -114,10 +112,42 @@ describe('listUserById', () => {
         const userId = 1;
 
         User.findByPk.mockResolvedValue(null);
-
         await expect(UserServices.listUserById(userId)).rejects.toThrow(new Error('Usuário não encontrado'));
     });
 });
+
+describe('updateUser', () => {
+    beforeEach(() => {
+        jest.resetAllMocks();
+        jest.clearAllMocks();
+    });
+
+    test('updateUser updates user with correct data', async () => {
+        const userId = 1;
+        const mockUser = {
+            id: userId,
+            name: 'Gabriel',
+            email: 'gabriel@gmail',
+            password: 'senha123',
+            age: 22,
+            role: 'user',
+        };
+
+        const mockBodyUser = {
+            name: 'Gabriel',
+            email: 'novoemail@gmail',
+            password: 'novasenha123',
+            age: 22,
+            role: 'user',
+        };
+
+        User.findByPk.mockResolvedValue(mockUser);
+        mockUser.update = jest.fn().mockResolvedValue(mockUser);
+
+        const user = await UserServices.updateUser(userId, mockBodyUser);
+        expect(user).toEqual(mockUser);
+    });
+});  
 
 
 

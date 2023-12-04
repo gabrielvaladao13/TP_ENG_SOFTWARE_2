@@ -10,6 +10,7 @@ jest.mock('../../database/Models/Account', () => ({
     belongsTo: jest.fn(),
     findAll: jest.fn(),
     findByPk: jest.fn(),
+    update: jest.fn(),
 }));
 
 jest.mock('../../database/Models/User', () => ({
@@ -68,7 +69,6 @@ describe('listAccounts', () => {
         Account.findAll.mockResolvedValue(mockAccountList);
 
         const accounts = await AccountServices.listAccounts();
-
         expect(accounts).toEqual(mockAccountList);
     });
 
@@ -76,7 +76,6 @@ describe('listAccounts', () => {
         Account.findAll.mockResolvedValue([]);
 
         const accounts = await AccountServices.listAccounts();
-
         expect(accounts).toEqual([]);
     });
 
@@ -100,15 +99,13 @@ describe('listAccountById', () => {
         Account.findByPk.mockResolvedValue(mockAccount);
 
         const account = await AccountServices.listAccountById(accountId);
-
         expect(account).toEqual(mockAccount);
     });
 
     test('listAccountById throws error with "Conta não encontrada" message when account is not found', async () => {
         const accountId = 1;
-        
-        Account.findByPk.mockResolvedValue(null);
 
+        Account.findByPk.mockResolvedValue(null);
         await expect(AccountServices.listAccountById(accountId)).rejects.toThrow(new Error('Conta não encontrada'));
 
     });
@@ -139,18 +136,42 @@ describe('listAccountByUserId', () => {
         Account.findAll.mockResolvedValue(mockAccountList);
 
         const accounts = await AccountServices.listAccountByUserId(userId);
-
         expect(accounts).toEqual(mockAccountList);
     });
 
     test('listAccountByUserId throws error with "Conta não encontrada" message when there are no accounts for the user', async () => {
         const accountId = 1;
-        
-        Account.findAll.mockResolvedValue(null);
 
+        Account.findAll.mockResolvedValue(null);
         await expect(AccountServices.listAccountByUserId(accountId)).rejects.toThrow(new Error('Conta não encontrada'));
 
     });
 
 });
 
+describe('updateBalanceByAccountById', () => {
+    beforeEach(() => {
+        jest.resetAllMocks();
+        jest.clearAllMocks();
+    });
+
+    test('updateBalanceByAccountById updates account balance with correct data', async () => {
+        const accountId = 1;
+        const mockAccount = {
+            id: accountId,
+            userId: 1,
+            agency: 'inter',
+            balance: 100,
+            save: jest.fn(),
+        };
+
+        const pastValue = mockAccount.balance;
+
+        const valueToUpdate = 50;
+
+        Account.findByPk.mockResolvedValue(mockAccount);
+
+        const updatedAccount = await AccountServices.updateBalanceByAccountById(accountId, valueToUpdate);
+        expect(updatedAccount.balance).toEqual(pastValue + valueToUpdate);
+    });
+});
