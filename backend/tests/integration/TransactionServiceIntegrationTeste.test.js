@@ -11,7 +11,6 @@ let id=0;
 
 describe('testeIntegracaoAccount', () => {
     test('testLogins', async () => {
-        //Make a login request here
         const response = await request
             .post('/api/usuarios/login')
             .send({
@@ -37,7 +36,6 @@ describe('testeIntegracaoAccount', () => {
             });
             id=response.body.id;
 
-        //console.log(response);
         expect(response.statusCode).toBe(201);
         expect(response.body).toHaveProperty('id');
         expect(response.body).toHaveProperty('value');
@@ -48,18 +46,16 @@ describe('testeIntegracaoAccount', () => {
         expect(response.body).toHaveProperty('date');
     });
 
-    test('listTransactions', async () => {
+    test('testlistTransactions', async () => {
         const response = await request
             .get('/api/transacoes/listarTransacoes');
 
-        //console.log(response);
         expect(response.statusCode).toBe(200);
         
     });
 
-    test('listTransactionsByUserId', async () => {
+    test('testlistTransactionsByUserId', async () => {
         const response = await request
-        //user id=1
             .get('/api/transacoes/listarTransacoes/1');
         expect(response.statusCode).toBe(200);
 

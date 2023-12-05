@@ -12,7 +12,6 @@ let id_user=3;
 
 describe('testeIntegracaoAccount', () => {
     test('testLogins', async () => {
-        //Make a login request here
         const response = await request
             .post('/api/usuarios/login')
             .send({
@@ -20,7 +19,6 @@ describe('testeIntegracaoAccount', () => {
                 password: "12345678",
 
             });
-            //console.log(id_user);
             expect(response.statusCode).toBe(204);
             expect(response.headers).toHaveProperty('set-cookie');
         });
@@ -35,7 +33,6 @@ describe('testeIntegracaoAccount', () => {
             });
             id=response.body.id;
 
-        //console.log(response);
         expect(response.statusCode).toBe(201);
         expect(response.body).toHaveProperty('id');
         expect(response.body).toHaveProperty('agency');
@@ -44,32 +41,29 @@ describe('testeIntegracaoAccount', () => {
 
     });
 
-    test('listAccounts', async () => {
+    test('testlistAccounts', async () => {
         const response = await request
             .get('/api/contas/listarContas');
 
-        //console.log(response);
         expect(response.statusCode).toBe(200);
     });
 
-    test('listAccountById1', async () => {
+    test('testlistAccountById1', async () => {
         const response = await request
             .get(`/api/contas/conta/${id}`);
 
-        //console.log(response);
         expect(response.statusCode).toBe(200);
     });
 
 
-    test('listAccountByUserId', async () => {
+    test('testlistAccountByUserId', async () => {
         const response = await request
             .get(`/api/contas/conta/${id_user}`);
 
-        //console.log(response);
         expect(response.statusCode).toBe(200);
     });
 
-    test('updateAccountById', async () => {
+    test('testupdateAccountById', async () => {
         const updatedAccount = {
             agency: "inter",
             balance: 1000,
@@ -79,18 +73,16 @@ describe('testeIntegracaoAccount', () => {
             .put(`/api/contas/conta/${id}`)
             .send(updatedAccount);
 
-        //console.log(response);
         expect(response.statusCode).toBe(200);
         expect(response.body.agency).toBe(updatedAccount.agency);
         expect(response.body.balance).toBe(updatedAccount.balance);
         
     });
 
-    test('deleteAccount', async () => {
+    test('testdeleteAccount', async () => {
         const response = await request
             .delete(`/api/contas/conta/${id}`);
 
-        //console.log(response);
         expect(response.statusCode).toBe(204);
     });
 

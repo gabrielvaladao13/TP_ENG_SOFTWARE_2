@@ -24,7 +24,7 @@ describe('testeIntegracaoUser', () => {
         });
 
 
-    test('crateUser', async () => {
+    test('testcrateUser', async () => {
         const response = await request
             .post('/api/usuarios/criarUsuario')
             .send({
@@ -47,23 +47,21 @@ describe('testeIntegracaoUser', () => {
         
     });
 
-    test('listUsers', async () => {
+    test('testlistUsers', async () => {
         const response = await request
             .get('/api/usuarios/listarUsuarios');
 
-        //console.log(response);
         expect(response.statusCode).toBe(200);
     });
 
-    test('listUserById', async () => {
+    test('testlistUserById', async () => {
         const response = await request
             .get(`/api/usuarios/usuario/${id}`);
 
-        //console.log(response);
         expect(response.statusCode).toBe(200);
     });
 
-    test('updateUserById', async () => {
+    test('testupdateUserById', async () => {
         const updatedUser = {
             name: "testeinteg3",
             email: "test3@gmail",
@@ -82,11 +80,11 @@ describe('testeIntegracaoUser', () => {
         expect(response.body.age).toBe(updatedUser.age);
         expect(response.body.role).toBe(updatedUser.role);
     });
-    test('deleteUser', async () => {
+    test('testdeleteUser', async () => {
         const response = await request
             .delete(`/api/usuarios/usuario/${id}`);
 
-        //console.log(response);
+
         expect(response.statusCode).toBe(204);
     });
 
